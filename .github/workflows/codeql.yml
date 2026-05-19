@@ -57,6 +57,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+    
+    - name: create build directory  
       run: mkdir -p -v ${{github.workspace}}/build
 
     - name: Configure CMake
