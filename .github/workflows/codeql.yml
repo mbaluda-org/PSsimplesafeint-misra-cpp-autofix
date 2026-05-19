@@ -60,12 +60,12 @@ jobs:
       run: mkdir -p -v ${{github.workspace}}/build
 
     - name: Configure CMake
-        working-directory: ${{github.workspace}}/build
-        shell: bash
-        env:
-          CC:   gcc-15
-          CXX:  g++-15
-        run: CC=gcc CXX=g++ cmake ${{github.workspace}}/cevelop-workspace/PSSafeIntTests/
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      env:
+        CC:   gcc-15
+        CXX:  g++-15
+      run: CC=gcc CXX=g++ cmake ${{github.workspace}}/cevelop-workspace/PSSafeIntTests/
 
     # Add any setup steps before running the `github/codeql-action/init` action.
     # This includes steps like installing compilers or runtimes (`actions/setup-node`
