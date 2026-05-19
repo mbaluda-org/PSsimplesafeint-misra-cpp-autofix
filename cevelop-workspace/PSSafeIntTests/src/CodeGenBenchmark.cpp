@@ -76,7 +76,7 @@ void codegenMultiplicationTest(){
     ASSERT_EQUAL(resi8,promote_keep_signedness(ressi8));
     ASSERT_EQUAL(from_int(resi8),ressi8);
     ASSERTM("expect signed integer overflow not detected by ubsan",resi8 < 0);
-    ASSERTM("expect signed integer overflow not detected by ubsan",ressi8 < 0_si8);
+    ASSERTM("expect signed integer overflow not detected by ubsan",ressi8 < 0U_si8);
 }
 void codegenSumThirdsTest(){
     auto resi8 = sumthirds(operations<int8_t>{i8_seed});
@@ -130,7 +130,7 @@ void codegenMultiplicationTest(){
     ASSERT_EQUAL(resi16,promote_keep_signedness(ressi16));
     ASSERT_EQUAL(from_int(resi16),ressi16);
     ASSERTM("expect signed integer overflow not detected by ubsan",resi16 < 0);
-    ASSERTM("expect signed integer overflow not detected by ubsan",ressi16 < 0_si16);
+    ASSERTM("expect signed integer overflow not detected by ubsan",ressi16 < 0U_si16);
     // no detection of overflow by UBSAN
 
 }
@@ -187,7 +187,7 @@ void codegenMultiplicationTest(){
     ASSERT_EQUAL(resi32,promote_keep_signedness(ressi32));
     ASSERT_EQUAL(from_int(resi32),ressi32);
     ASSERTM("expect signed integer overflow detected by ubsan",resi32 < 0);
-    ASSERTM("expect signed integer overflow not detected by ubsan",ressi32 < 0_si32);
+    ASSERTM("expect signed integer overflow not detected by ubsan",ressi32 < 0U_si32);
     // ../src/CodeGenBenchmark.cpp:23:99: runtime error: signed integer overflow: 122522400 * 89 cannot be represented in type 'int'
 
 }
@@ -246,7 +246,7 @@ void codegenMultiplicationTest(){
     ASSERT_EQUAL(resi64,promote_keep_signedness(ressi64));
     ASSERT_EQUAL(from_int(resi64),ressi64);
     ASSERTM("expect signed integer overflow detected by ubsan",resi64 < 0);
-    ASSERTM("expect signed integer overflow not detected by ubsan",ressi64 < 0_si64);
+    ASSERTM("expect signed integer overflow not detected by ubsan",ressi64 < 0U_si64);
     // ../src/CodeGenBenchmark.cpp:23:99: runtime error: signed integer overflow: 137932073613734400 * 610 cannot be represented in type 'long long int'
 
 }

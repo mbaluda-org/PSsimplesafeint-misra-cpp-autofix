@@ -604,7 +604,7 @@ void ui16intExists() {
 }
 
 void ui16NotEqualAutomaticInCpp20(){
-    ASSERT(0xf_ui16 != 0_ui16);
+    ASSERT(0xFU_ui16 != 0U_ui16);
 }
 
 void ui16canbeadded(){
