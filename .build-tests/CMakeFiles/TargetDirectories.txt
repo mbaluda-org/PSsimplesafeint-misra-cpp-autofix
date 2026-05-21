@@ -1,0 +1,4 @@
+/tmp/workspace/mbaluda-org/PSsimplesafeint-misra-cpp-autofix/.build-tests/CMakeFiles/PSSafeIntTests.dir
+/tmp/workspace/mbaluda-org/PSsimplesafeint-misra-cpp-autofix/.build-tests/CMakeFiles/test.dir
+/tmp/workspace/mbaluda-org/PSsimplesafeint-misra-cpp-autofix/.build-tests/CMakeFiles/edit_cache.dir
+/tmp/workspace/mbaluda-org/PSsimplesafeint-misra-cpp-autofix/.build-tests/CMakeFiles/rebuild_cache.dir
