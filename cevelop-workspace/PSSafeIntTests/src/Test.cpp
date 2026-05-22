@@ -790,7 +790,7 @@ void si8negationminintidempotent(){
 }
 
 void si8overflowmakesitNegative(){
-    ASSERT_EQUAL(-2_si8,127_si8+127_si8);
+    static_assert(-2_si8 == 127_si8+127_si8);
 }
 
 void si8subtraction(){
