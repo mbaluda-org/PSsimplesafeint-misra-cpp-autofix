@@ -43,7 +43,7 @@ inline namespace literals {
 consteval
 ui8 operator""_ui8(unsigned long long val) {
     if (val <= std::numeric_limits<std::underlying_type_t<ui8>>::max()) {
-        return ui8(val);
+        return static_cast<ui8>(val);
     } else {
         throw "integral constant too large"; // trigger compile-time error
     }
@@ -53,7 +53,7 @@ ui8 operator""_ui8(unsigned long long val) {
 consteval
 ui16 operator""_ui16(unsigned long long val) {
     if (val <= std::numeric_limits<std::underlying_type_t<ui16>>::max()) {
-        return ui16(val);
+        return static_cast<ui16>(val);
     } else {
         throw "integral constant too large"; // trigger compile-time error
     }
@@ -63,7 +63,7 @@ ui16 operator""_ui16(unsigned long long val) {
 consteval
 ui32 operator""_ui32(unsigned long long val) {
     if (val <= std::numeric_limits<std::underlying_type_t<ui32>>::max()) {
-        return ui32(val);
+        return static_cast<ui32>(val);
     } else {
         throw "integral constant too large"; // trigger compile-time error
     }
@@ -77,7 +77,7 @@ ui64 operator""_ui64(unsigned long long val) {
             throw "integral constant too large"; // trigger compile-time error
         }
     }
-    return ui64(val);
+    return static_cast<ui64>(val);
 }
 
 }
@@ -91,7 +91,7 @@ inline namespace literals {
 consteval
 si8 operator""_si8(unsigned long long val) {
     if (val <= std::numeric_limits<std::underlying_type_t<si8>>::max()) {
-        return si8(val);
+        return static_cast<si8>(val);
     } else {
         throw "integral constant too large"; // trigger compile-time error
     }
@@ -101,7 +101,7 @@ si8 operator""_si8(unsigned long long val) {
 consteval
 si16 operator""_si16(unsigned long long val) {
     if (val <= std::numeric_limits<std::underlying_type_t<si16>>::max()) {
-        return si16(val);
+        return static_cast<si16>(val);
     } else {
         throw "integral constant too large"; // trigger compile-time error
     }
@@ -111,7 +111,7 @@ si16 operator""_si16(unsigned long long val) {
 consteval
 si32 operator""_si32(unsigned long long val) {
     if (val <= std::numeric_limits<std::underlying_type_t<si32>>::max()) {
-        return si32(val);
+        return static_cast<si32>(val);
     } else {
         throw "integral constant too large"; // trigger compile-time error
     }
@@ -121,7 +121,7 @@ si32 operator""_si32(unsigned long long val) {
 consteval
 si64 operator""_si64(unsigned long long val) {
     if (val <= std::numeric_limits<std::underlying_type_t<si64>>::max()) {
-        return si64(val);
+        return static_cast<si64>(val);
     } else {
         throw "integral constant too large"; // trigger compile-time error
     }
