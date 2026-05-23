@@ -918,7 +918,7 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(ui16canNotbecomparedwithui8));
 	s.push_back(CUTE(ui32CanNotbeComparedwithlong));
 	s.push_back(CUTE(_testing::signedIntegerBoundaryTestResultRecovery));
-	cute::xml_file_opener xmlfile(argc > 0 ? static_cast<std::size_t>(argc) : 0u, argv);
+	cute::xml_file_opener xmlfile(static_cast<std::size_t>(argc), argv);
     cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
     auto runner = cute::makeRunner(lis, argc, argv);
     bool success = runner(s, "AllTests");
