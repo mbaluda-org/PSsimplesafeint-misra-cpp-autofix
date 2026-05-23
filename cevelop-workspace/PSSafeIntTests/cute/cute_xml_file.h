@@ -46,7 +46,8 @@ struct xml_file_opener {
 		return basename("testresult");
 	}
 	char const *basename(char const *path){
-		static constexpr std::size_t xml_suffix_length = 5u;
+		static constexpr char xml_suffix[] = ".xml";
+		static constexpr std::size_t xml_suffix_length = sizeof(xml_suffix);
 #if defined( _MSC_VER ) || defined(__MINGW32__)
 		char const sep='\\';
 #else
@@ -59,15 +60,13 @@ struct xml_file_opener {
 			}
 		}
 		std::size_t index = 0u;
-		while ((base[index] != '\0') && (index < (filename.size() - xml_suffix_length))) {
+		while ((base[index] != '\0') && ((index + xml_suffix_length) < filename.size())) {
 			filename[index] = base[index];
 			++index;
 		}
-		filename[index++] = '.';
-		filename[index++] = 'x';
-		filename[index++] = 'm';
-		filename[index++] = 'l';
-		filename[index] = '\0';
+		for (std::size_t suffix_index = 0u; suffix_index < xml_suffix_length; ++suffix_index, ++index){
+			filename[index] = xml_suffix[suffix_index];
+		}
 		return filename.data();
 	}
 };
