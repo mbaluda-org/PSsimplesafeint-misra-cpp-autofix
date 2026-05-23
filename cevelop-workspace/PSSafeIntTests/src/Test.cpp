@@ -784,9 +784,9 @@ void si8Negation(){
 }
 
 void si8negationminintidempotent(){
-    auto x = promote_keep_signedness(-(1_si8+127_si8));
+    constexpr auto x = promote_keep_signedness(-(1_si8+127_si8));
     static_assert(std::is_integral_v<decltype(x)>);
-    ASSERT_EQUAL(-128, static_cast<int>(x));
+    static_assert(x == -128);
 }
 
 void si8overflowmakesitNegative(){

@@ -561,7 +561,8 @@ requires same_signedness<LEFT,RIGHT>
 #if defined(__GNUG__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wterminate"
 #endif
-    ps_assert(result_t{}, r != RIGHT{});
+    bool const divisor_is_nonzero = (r != RIGHT{});
+    ps_assert(result_t{}, divisor_is_nonzero);
 #pragma GCC diagnostic pop
     if constexpr (std::numeric_limits<result_t>::is_signed){
         bool result_is_negative = (l < LEFT{}) != (r < RIGHT{});
@@ -606,7 +607,8 @@ requires same_signedness<LEFT,RIGHT> && std::is_unsigned_v<detail_::ULT<LEFT>>
 #if defined(__GNUG__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wterminate"
 #endif
-    ps_assert(result_t{}, r != RIGHT{});
+    bool const divisor_is_nonzero = (r != RIGHT{});
+    ps_assert(result_t{}, divisor_is_nonzero);
 #pragma GCC diagnostic pop
     return static_cast<result_t>(
             static_cast<ult>(
