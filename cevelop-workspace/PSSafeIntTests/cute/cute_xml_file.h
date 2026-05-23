@@ -33,7 +33,7 @@
 
 namespace cute {
 struct xml_file_opener {
-	static constexpr std::size_t filename_capacity = static_cast<std::size_t>(FILENAME_MAX);
+	static constexpr std::size_t filename_capacity = FILENAME_MAX;
 	std::array<char, filename_capacity> filename{};
 	std::ofstream out;
 	xml_file_opener(int argc, char const *const* argv)
@@ -65,8 +65,10 @@ struct xml_file_opener {
 			filename[index] = base[index];
 			++index;
 		}
-		for (std::size_t suffix_index = 0u; suffix_index < xml_suffix_length; ++suffix_index, ++index){
-			filename[index] = xml_suffix[suffix_index];
+		if ((index + xml_suffix_length) < filename.size()) {
+			for (std::size_t suffix_index = 0u; suffix_index < xml_suffix_length; ++suffix_index, ++index){
+				filename[index] = xml_suffix[suffix_index];
+			}
 		}
 		filename[index] = '\0';
 		return filename.data();
