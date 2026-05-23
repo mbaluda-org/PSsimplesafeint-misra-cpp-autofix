@@ -37,9 +37,9 @@ namespace cute {
 
 namespace cute_impl_demangle {
 inline std::string plain_demangle(char const *name){
-	if (!name) return "unknown";
+	if (name == nullptr) return "unknown";
 	char const *toBeFreed = abi::__cxa_demangle(name,nullptr,nullptr,nullptr);
-	std::string result(toBeFreed?toBeFreed:name);
+	std::string result((toBeFreed != nullptr) ? toBeFreed : name);
 	::free(const_cast<char*>(toBeFreed));
 	return result;
 }
@@ -77,7 +77,7 @@ inline void patchresultforstring(std::string& result) {
 
 }
 inline std::string demangle(char const *name){
-	if (!name) return "unknown";
+	if (name == nullptr) return "unknown";
 	std::string result(cute_impl_demangle::plain_demangle(name));
 #if defined(_LIBCPP_ABI_NAMESPACE) || defined(_LIBCPP_NAMESPACE) || defined(_GLIBCXX_USE_CXX11_ABI)
 	cute_impl_demangle::patchresultforstring(result);

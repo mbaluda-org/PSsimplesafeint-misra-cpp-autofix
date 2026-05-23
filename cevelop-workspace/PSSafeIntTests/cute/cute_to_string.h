@@ -28,13 +28,30 @@
 
 #include <string>
 #include <algorithm>
+#include <type_traits>
+#include <utility>
+#ifndef DONT_USE_IOSTREAM
+#include <ostream>
+#include <sstream>
+#include <typeinfo>
+#ifdef _MSC_VER
+#include <map>
+#include <set>
+#endif
+#include "cute_demangle.h"
+#include "cute_determine_version.h"
+#ifdef USE_STD11
+#include "cute_integer_sequence.h"
+#include <tuple>
+#endif
+#endif
 #ifdef USE_STD17
 #include <cstddef>
 #endif
 
 namespace cute {
 namespace cute_to_string {
-		static inline std::string backslashQuoteTabNewline(std::string const &input){
+		inline std::string backslashQuoteTabNewline(std::string const &input){
 			std::string result;
 			result.reserve(input.size());
 			for (std::string::size_type i=0; i < input.length() ; ++i){
@@ -49,10 +66,10 @@ namespace cute_to_string {
 			return result;
 		}
 		// common overloads of interface that work without an ostream
-		static inline std::string to_string(char const *const &s){
+		inline std::string to_string(char const *const &s){
 			return s;
 		}
-		static inline std::string to_string(std::string const &s){
+		inline std::string to_string(std::string const &s){
 			return s;
 		}
 		template <typename T>
@@ -68,19 +85,6 @@ namespace cute_to_string {
 	}
 }
 #ifndef DONT_USE_IOSTREAM
-#include <ostream>
-#include <sstream>
-#include <typeinfo>
-#ifdef _MSC_VER
-#include <map>
-#include <set>
-#endif
-#include "cute_demangle.h"
-#include "cute_determine_version.h"
-#ifdef USE_STD11
-#include "cute_integer_sequence.h"
-#include <tuple>
-#endif
 namespace cute {
 namespace cute_to_string {
 		template <typename T>
@@ -96,16 +100,20 @@ namespace cute_to_string {
 			char operator<<( std::basic_ostream<CharT,Traits> &, T const & );
 			template <class T,class CharT,class Traits>
 			struct is_output_streamable_impl {
-				static std::basic_ostream<CharT,Traits> & f();
-				static T const & g();
-				enum e { value = (sizeof(char) != sizeof(f()<<g())) }; // assumes sizeof(char)!=sizeof(ostream&)
+				using streamed_t = std::remove_reference_t<decltype(
+						std::declval<std::basic_ostream<CharT,Traits> &>()
+						<< std::declval<T const &>()
+				)>;
+				enum e { value = (sizeof(char) != sizeof(streamed_t)) }; // assumes sizeof(char)!=sizeof(ostream&)
 			};
 			// specialization for pointer types to map char * to operator<<(std::ostream&,char const *)
 			template <class T,class CharT,class Traits>
 			struct is_output_streamable_impl<T*,CharT,Traits> {
-				static std::basic_ostream<CharT,Traits> & f();
-				static T const * g();
-				enum e { value = (sizeof(char) != sizeof(f()<<g())) }; // assumes sizeof(char)!=sizeof(ostream&)
+				using streamed_t = std::remove_reference_t<decltype(
+						std::declval<std::basic_ostream<CharT,Traits> &>()
+						<< std::declval<T const *>()
+				)>;
+				enum e { value = (sizeof(char) != sizeof(streamed_t)) }; // assumes sizeof(char)!=sizeof(ostream&)
 			};
 			template <class CONT>
 			struct has_begin_end_const_member {

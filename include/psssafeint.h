@@ -561,7 +561,7 @@ requires same_signedness<LEFT,RIGHT>
 #if defined(__GNUG__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wterminate"
 #endif
-    ps_assert(result_t{}, r != RIGHT{} && " division by zero");
+    ps_assert(result_t{}, r != RIGHT{});
 #pragma GCC diagnostic pop
     if constexpr (std::numeric_limits<result_t>::is_signed){
         bool result_is_negative = (l < LEFT{}) != (r < RIGHT{});
@@ -606,7 +606,7 @@ requires same_signedness<LEFT,RIGHT> && std::is_unsigned_v<detail_::ULT<LEFT>>
 #if defined(__GNUG__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wterminate"
 #endif
-    ps_assert(result_t{}, r != RIGHT{} && " division by zero");
+    ps_assert(result_t{}, r != RIGHT{});
 #pragma GCC diagnostic pop
     return static_cast<result_t>(
             static_cast<ult>(
@@ -700,7 +700,7 @@ requires std::is_unsigned_v<detail_::ULT<LEFT>> && std::is_unsigned_v<detail_::U
 #if defined(__GNUG__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wterminate"
 #endif
-    ps_assert(LEFT{},static_cast<size_t>(promote_keep_signedness(r)) < sizeof(LEFT)*CHAR_BIT && "trying to shift by too many bits");
+    ps_assert(LEFT{},static_cast<size_t>(promote_keep_signedness(r)) < sizeof(LEFT)*CHAR_BIT);
 #pragma GCC diagnostic pop
     return static_cast<LEFT>(promote_keep_signedness(l)<<promote_keep_signedness(r));
 }
@@ -721,7 +721,7 @@ requires std::is_unsigned_v<detail_::ULT<LEFT>> && std::is_unsigned_v<detail_::U
 #if defined(__GNUG__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wterminate"
 #endif
-    ps_assert(LEFT{},static_cast<size_t>(promote_keep_signedness(r)) < sizeof(LEFT)*CHAR_BIT && "trying to shift by too many bits");
+    ps_assert(LEFT{},static_cast<size_t>(promote_keep_signedness(r)) < sizeof(LEFT)*CHAR_BIT);
 #pragma GCC diagnostic pop
     return static_cast<LEFT>(promote_keep_signedness(l)>>promote_keep_signedness(r));
 }

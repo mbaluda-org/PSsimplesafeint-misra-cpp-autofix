@@ -75,7 +75,7 @@ namespace cute {
 			OutputDebugString(os.str().c_str());
 #endif
 		}
-		static std::string maskBlanks(std::string in) {
+		std::string maskBlanks(std::string in) const {
 			std::transform(in.begin(),in.end(),in.begin(),blankToUnderscore());
 			return in;
 		}
