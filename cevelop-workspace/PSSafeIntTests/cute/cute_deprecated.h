@@ -29,7 +29,7 @@
 #if __cplusplus >= 201402L
 #define DEPRECATE(orig, repl) [[deprecated ("Use "#repl" instead.")]] inline void orig() {}
 #elif defined(__GNUG__)
-#if defined(__clang__) || (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 5))
+#if defined(__clang__) || (defined(__GNUC__) && defined(__GNUC_MINOR__) && ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 5))))
 #define DEPRECATE(orig, repl) __attribute__((deprecated("Use "#repl" instead."))) inline void orig() {}
 #else
 #define DEPRECATE(orig, repl) __attribute__((deprecated)) inline void orig() {}
