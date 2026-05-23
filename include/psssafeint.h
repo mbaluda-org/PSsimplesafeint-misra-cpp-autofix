@@ -561,8 +561,12 @@ requires same_signedness<LEFT,RIGHT>
 #if defined(__GNUG__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wterminate"
 #endif
-    if (r == RIGHT{}) {
+    switch (promote_keep_signedness(r)) {
+    case 0:
         ps_assert(result_t{}, false);
+        break;
+    default:
+        break;
     }
 #pragma GCC diagnostic pop
     if constexpr (std::numeric_limits<result_t>::is_signed){
@@ -608,8 +612,12 @@ requires same_signedness<LEFT,RIGHT> && std::is_unsigned_v<detail_::ULT<LEFT>>
 #if defined(__GNUG__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wterminate"
 #endif
-    if (r == RIGHT{}) {
+    switch (promote_keep_signedness(r)) {
+    case 0:
         ps_assert(result_t{}, false);
+        break;
+    default:
+        break;
     }
 #pragma GCC diagnostic pop
     return static_cast<result_t>(
