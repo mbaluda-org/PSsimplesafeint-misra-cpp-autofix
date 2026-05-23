@@ -243,6 +243,7 @@ namespace cute {
 DEPRECATE(ASSERT_EQUAL_RANGES_M, ASSERT_EQUAL_RANGESM)
 #define ASSERT_EQUAL_RANGES_M(msg,expbeg,expend,actbeg,actend) DEPRECATED(ASSERT_EQUAL_RANGES_M), ASSERT_EQUALM(msg,cute::make_range(expbeg,expend),cute::make_range(actbeg,actend))
 #define ASSERT_EQUAL_RANGESM(msg,expbeg,expend,actbeg,actend) ASSERT_EQUALM(msg,cute::make_range(expbeg,expend),cute::make_range(actbeg,actend))
+namespace cute {
 template <typename ExpBeg, typename ExpEnd, typename ActBeg, typename ActEnd>
 inline void ASSERT_EQUAL_RANGES(ExpBeg const &expbeg
 		,ExpEnd const &expend
@@ -254,5 +255,6 @@ inline void ASSERT_EQUAL_RANGES(ExpBeg const &expbeg
 			,CUTE_FUNCNAME_PREFIX+cute::cute_to_string::backslashQuoteTabNewline("expected range does not equal actual range")
 			,location.file_name()
 			,static_cast<int>(location.line()));
+}
 }
 #endif /*CUTE_EQUALS_H_*/
