@@ -36,11 +36,11 @@ struct xml_file_opener {
 	static constexpr std::size_t filename_capacity = FILENAME_MAX;
 	std::array<char, filename_capacity> filename{};
 	std::ofstream out;
-	xml_file_opener(int argc, char const *const* argv)
+	xml_file_opener(std::size_t argument_count, char const *const* argv)
 	:filename{}
-	,out(make_filename(argc, argv)){}
-	char const *make_filename(int argc, char const *const* argv){
-		if ((argc > 0) && (argv != nullptr) && (argv[0] != nullptr)) {
+	,out(make_filename(argument_count, argv)){}
+	char const *make_filename(std::size_t argument_count, char const *const* argv){
+		if ((argument_count > 0u) && (argv != nullptr) && (argv[0] != nullptr)) {
 			return basename(argv[0]);
 		}
 		return basename("testresult");
