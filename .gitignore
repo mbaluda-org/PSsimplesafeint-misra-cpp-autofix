@@ -41,5 +41,4 @@ Debug
 .*.html
 *.asm
 build/
-
 .build/
