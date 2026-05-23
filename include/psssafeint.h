@@ -557,18 +557,8 @@ requires same_signedness<LEFT,RIGHT>
     using result_t=std::conditional_t<sizeof(LEFT)>=sizeof(RIGHT),LEFT,RIGHT>;
     using ult = detail_::ULT<result_t>;
 
-#pragma GCC diagnostic push
-#if defined(__GNUG__) && !defined(__clang__)
-#pragma GCC diagnostic ignored "-Wterminate"
-#endif
-    switch (promote_keep_signedness(r)) {
-    case 0:
-        ps_assert(result_t{}, false);
-        break;
-    default:
-        break; // non-zero divisor
-    }
-#pragma GCC diagnostic pop
+    auto const promoted_r = promote_keep_signedness(r);
+    ps_assert(result_t{}, promoted_r != decltype(promoted_r){});
     if constexpr (std::numeric_limits<result_t>::is_signed){
         bool result_is_negative = (l < LEFT{}) != (r < RIGHT{});
         auto absresult =  static_cast<result_t>(
@@ -608,18 +598,8 @@ requires same_signedness<LEFT,RIGHT> && std::is_unsigned_v<detail_::ULT<LEFT>>
 {
     using result_t=std::conditional_t<sizeof(LEFT)>=sizeof(RIGHT),LEFT,RIGHT>;
     using ult = detail_::ULT<result_t>;
-#pragma GCC diagnostic push
-#if defined(__GNUG__) && !defined(__clang__)
-#pragma GCC diagnostic ignored "-Wterminate"
-#endif
-    switch (promote_keep_signedness(r)) {
-    case 0:
-        ps_assert(result_t{}, false);
-        break;
-    default:
-        break; // non-zero divisor
-    }
-#pragma GCC diagnostic pop
+    auto const promoted_r = promote_keep_signedness(r);
+    ps_assert(result_t{}, promoted_r != decltype(promoted_r){});
     return static_cast<result_t>(
             static_cast<ult>(
                     promote_and_extend_to_unsigned<ult>(l)
