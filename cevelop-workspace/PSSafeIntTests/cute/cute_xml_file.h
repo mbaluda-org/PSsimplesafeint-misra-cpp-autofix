@@ -28,11 +28,12 @@
 
 #include <array>
 #include <cstddef>
+#include <cstdio>
 #include <fstream>
 
 namespace cute {
 struct xml_file_opener {
-	static constexpr std::size_t filename_capacity = 256u;
+	static constexpr std::size_t filename_capacity = static_cast<std::size_t>(FILENAME_MAX);
 	std::array<char, filename_capacity> filename{};
 	std::ofstream out;
 	xml_file_opener(int argc, char const *const* argv)
@@ -45,6 +46,7 @@ struct xml_file_opener {
 		return basename("testresult");
 	}
 	char const *basename(char const *path){
+		static constexpr std::size_t xml_suffix_length = 5u;
 #if defined( _MSC_VER ) || defined(__MINGW32__)
 		char const sep='\\';
 #else
@@ -57,7 +59,7 @@ struct xml_file_opener {
 			}
 		}
 		std::size_t index = 0u;
-		while ((base[index] != '\0') && (index + 5u < filename.size())) {
+		while ((base[index] != '\0') && (index < (filename.size() - xml_suffix_length))) {
 			filename[index] = base[index];
 			++index;
 		}
