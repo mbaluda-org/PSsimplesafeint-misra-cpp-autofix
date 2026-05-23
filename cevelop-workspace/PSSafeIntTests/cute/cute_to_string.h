@@ -104,7 +104,7 @@ namespace cute_to_string {
 						std::declval<std::basic_ostream<CharT,Traits> &>()
 						<< std::declval<T const &>()
 				)>;
-				enum e { value = (sizeof(char) != sizeof(streamed_t)) }; // assumes sizeof(char)!=sizeof(ostream&)
+				enum e : bool { value = (sizeof(char) != sizeof(streamed_t)) }; // assumes sizeof(char)!=sizeof(ostream&)
 			};
 			// specialization for pointer types to map char * to operator<<(std::ostream&,char const *)
 			template <class T,class CharT,class Traits>
@@ -113,7 +113,7 @@ namespace cute_to_string {
 						std::declval<std::basic_ostream<CharT,Traits> &>()
 						<< std::declval<T const *>()
 				)>;
-				enum e { value = (sizeof(char) != sizeof(streamed_t)) }; // assumes sizeof(char)!=sizeof(ostream&)
+				enum e : bool { value = (sizeof(char) != sizeof(streamed_t)) }; // assumes sizeof(char)!=sizeof(ostream&)
 			};
 			template <class CONT>
 			struct has_begin_end_const_member {
