@@ -128,7 +128,7 @@ namespace cute {
 		inline bool do_equals(bool const &expected
 				      ,bool const &actual
 				      , const impl_place_for_traits::true_type&,const impl_place_for_traits::true_type&){
-			return expected==actual;
+			return expected ? actual : !actual;
 		}
 		// overload for char const *, my test case failed because VC++ doesn't use string constant folding like g++/clang
 		// a feature where we should do string comparison
