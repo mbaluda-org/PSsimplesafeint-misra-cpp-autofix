@@ -923,7 +923,7 @@ bool runAllTests(int argc, char const *argv[]) {
     auto runner = cute::makeRunner(lis, argc, argv);
     bool success = runner(s, "AllTests");
     success = runner(make_suite_CodeGenBenchmark(),"CodeGenBenchmark") && success;
-    success &= runner(TestForZeroReturnAssertWithNDEBUG, "TestForZeroReturnAssertWithNDEBUG");
+    success = success && runner(TestForZeroReturnAssertWithNDEBUG, "TestForZeroReturnAssertWithNDEBUG");
     return success;
 }
 

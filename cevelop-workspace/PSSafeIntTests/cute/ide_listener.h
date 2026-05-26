@@ -54,11 +54,11 @@ namespace cute {
 			Listener::start(t);
 		}
 		void success(test const &t, char const *msg){
-			out << "\n#success " <<  maskBlanks(t.name()) << " " << msg << '\n' << std::flush;
+			out << "\n#success " <<  this->maskBlanks(t.name()) << " " << msg << '\n' << std::flush;
 			Listener::success(t,msg);
 		}
 		void failure(test const &t,test_failure const &e){
-			out << std::dec <<  "\n#failure " << maskBlanks(t.name()) << " " << e.filename << ":" << e.lineno << " " << (e.reason) << '\n' << std::flush;
+			out << std::dec <<  "\n#failure " << this->maskBlanks(t.name()) << " " << e.filename << ":" << e.lineno << " " << (e.reason) << '\n' << std::flush;
 			Listener::failure(t,e);
 #ifdef _MSC_VER
 			std::ostringstream os;
@@ -67,7 +67,7 @@ namespace cute {
 #endif
 		}
 		void error(test const &t, char const *what){
-			out << "\n#error " << maskBlanks(t.name()) << " " << what << '\n' << std::flush;
+			out << "\n#error " << this->maskBlanks(t.name()) << " " << what << '\n' << std::flush;
 			Listener::error(t,what);
 #ifdef _MSC_VER
 			std::ostringstream os;
