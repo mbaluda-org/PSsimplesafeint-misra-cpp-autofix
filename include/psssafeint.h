@@ -258,7 +258,7 @@ namespace detail_{
 
 template<a_safeint LEFT, a_safeint RIGHT>
 constexpr bool
-same_signedness_v = detail_::is_safeint_v<LEFT> && detail_::is_safeint_v<RIGHT> && std::numeric_limits<LEFT>::is_signed == std::numeric_limits<RIGHT>::is_signed;
+same_signedness_v = detail_::is_safeint_v<LEFT> && detail_::is_safeint_v<RIGHT> && (std::numeric_limits<LEFT>::is_signed == std::numeric_limits<RIGHT>::is_signed);
 
 template<typename CHAR>
 constexpr bool
@@ -279,7 +279,7 @@ is_compatible_integer_v = std::is_same_v<TESTED,INT> ||
    && !std::is_same_v<bool,TESTED>
    && !is_chartype_v<TESTED>
    && (std::is_unsigned_v<INT> == std::is_unsigned_v<TESTED>)
-   && std::numeric_limits<TESTED>::max() == std::numeric_limits<INT>::max() );
+   && (std::numeric_limits<TESTED>::max() == std::numeric_limits<INT>::max()) );
 
 template<typename INT, typename TESTED>
 constexpr bool
@@ -354,7 +354,7 @@ abs_promoted_and_extended_as_unsigned(E val) noexcept
        static_assert(std::is_unsigned_v<u_result_t>);
        using s_result_t = std::make_signed_t<u_result_t>;
        s_result_t value = promote_keep_signedness(val);
-       if (val < E{} && value > std::numeric_limits<s_result_t>::min()){
+       if ((val < E{}) && (value > std::numeric_limits<s_result_t>::min())){
            return static_cast<u_result_t>(-static_cast<s_result_t>(value)); // cannot overflow
        } else {
            return static_cast<u_result_t>(value);
@@ -398,12 +398,12 @@ from_int_to(FROM val) NOEXCEPT_WITH_THROWING_ASSERTS
     using result_t = TO;
     using ultr = std::underlying_type_t<result_t>;
     if constexpr(std::is_unsigned_v<ultr>){
-        ps_assert( result_t{}, (val >= FROM{} &&
-                                val <= std::numeric_limits<ultr>::max())) ;
+        ps_assert( result_t{}, ((val >= FROM{}) &&
+                                (val <= std::numeric_limits<ultr>::max()))) ;
         return static_cast<result_t>(val);
     } else {
-        ps_assert( result_t{}, (val <= std::numeric_limits<ultr>::max() &&
-                                val >= std::numeric_limits<ultr>::min()));
+        ps_assert( result_t{}, ((val <= std::numeric_limits<ultr>::max()) &&
+                                (val >= std::numeric_limits<ultr>::min())));
         return static_cast<result_t>(val);
     }
 #ifdef NDEBUG
@@ -561,7 +561,7 @@ requires same_signedness<LEFT,RIGHT>
 #if defined(__GNUG__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wterminate"
 #endif
-    ps_assert(result_t{}, r != RIGHT{} && " division by zero");
+    ps_assert(result_t{}, (r != RIGHT{}) && " division by zero");
 #pragma GCC diagnostic pop
     if constexpr (std::numeric_limits<result_t>::is_signed){
         bool result_is_negative = (l < LEFT{}) != (r < RIGHT{});
@@ -606,7 +606,7 @@ requires same_signedness<LEFT,RIGHT> && std::is_unsigned_v<detail_::ULT<LEFT>>
 #if defined(__GNUG__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wterminate"
 #endif
-    ps_assert(result_t{}, r != RIGHT{} && " division by zero");
+    ps_assert(result_t{}, (r != RIGHT{}) && " division by zero");
 #pragma GCC diagnostic pop
     return static_cast<result_t>(
             static_cast<ult>(
@@ -700,7 +700,7 @@ requires std::is_unsigned_v<detail_::ULT<LEFT>> && std::is_unsigned_v<detail_::U
 #if defined(__GNUG__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wterminate"
 #endif
-    ps_assert(LEFT{},static_cast<size_t>(promote_keep_signedness(r)) < sizeof(LEFT)*CHAR_BIT && "trying to shift by too many bits");
+    ps_assert(LEFT{},(static_cast<size_t>(promote_keep_signedness(r)) < (sizeof(LEFT) * CHAR_BIT)) && "trying to shift by too many bits");
 #pragma GCC diagnostic pop
     return static_cast<LEFT>(promote_keep_signedness(l)<<promote_keep_signedness(r));
 }
@@ -721,7 +721,7 @@ requires std::is_unsigned_v<detail_::ULT<LEFT>> && std::is_unsigned_v<detail_::U
 #if defined(__GNUG__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wterminate"
 #endif
-    ps_assert(LEFT{},static_cast<size_t>(promote_keep_signedness(r)) < sizeof(LEFT)*CHAR_BIT && "trying to shift by too many bits");
+    ps_assert(LEFT{},(static_cast<size_t>(promote_keep_signedness(r)) < (sizeof(LEFT) * CHAR_BIT)) && "trying to shift by too many bits");
 #pragma GCC diagnostic pop
     return static_cast<LEFT>(promote_keep_signedness(l)>>promote_keep_signedness(r));
 }

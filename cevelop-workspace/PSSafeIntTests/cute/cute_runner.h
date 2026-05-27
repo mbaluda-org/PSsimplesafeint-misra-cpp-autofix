@@ -53,7 +53,7 @@ namespace cute {
 		prefixCutter(std::string const &prefix):prefix(prefix){}
 		std::string operator()(std::string s) const {
 			size_t found=s.find(prefix);
-			if ( found==0 && s.size()>prefix.size() && s[prefix.size()]=='#'){
+			if ((found == 0) && (s.size() > prefix.size()) && (s[prefix.size()] == '#')){
 				s = s.substr(prefix.size()+1);
 			} else {
 				s.clear(); // either no match, or no individual test
@@ -120,7 +120,7 @@ namespace cute {
 	private:
 	    bool needsFiltering(int argc, const char *const *argv) const
 	    {
-	        return argc > 1 && argv ;
+	        return (argc > 1) && argv ;
 	    }
 
 
