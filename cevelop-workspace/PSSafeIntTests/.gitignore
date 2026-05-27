@@ -1,4 +1,5 @@
 /Debug/
+/.build/
 /build/
 /Release/
 /PS_ASSERT_THROWS/
