@@ -58,8 +58,10 @@ inline void patch_library_namespace(std::string &mightcontaininlinenamespace) {
 #define TOREPLACE "::" NS(_GLIBCXX_NAMESPACE_CXX11)
 #endif
 	std::string const nothing;
-	while (std::string::npos != (pos= mightcontaininlinenamespace.find(TOREPLACE)))
-			mightcontaininlinenamespace = mightcontaininlinenamespace.erase(pos,sizeof(TOREPLACE)-1);
+	while (std::string::npos != (pos= mightcontaininlinenamespace.find(TOREPLACE))){
+			std::string &erased = mightcontaininlinenamespace.erase(pos,sizeof(TOREPLACE)-1);
+			(void) erased;
+	}
 #undef NS
 #undef XNS
 #undef TOREPLACE
@@ -68,8 +70,12 @@ inline void patchresultforstring(std::string& result) {
 	static const std::string stringid=plain_demangle(typeid(std::string).name());
 	std::string::size_type pos=std::string::npos;
 	while(std::string::npos != (pos=result.find(stringid))){
-		if (!result.compare(pos+stringid.size(),2," >",2)) result = result.erase(pos+stringid.size(),1); // makes templates look nice
-		result = result.replace(pos,stringid.size(),"std::string");
+		if (!result.compare(pos+stringid.size(),2," >",2)) {
+			std::string &erased = result.erase(pos+stringid.size(),1); // makes templates look nice
+			(void) erased;
+		}
+		std::string &replaced = result.replace(pos,stringid.size(),"std::string");
+		(void) replaced;
 	}
 	patch_library_namespace(result);
 }
@@ -92,16 +98,22 @@ namespace cute_demangle_impl {
 
 inline void removeMSKeyword(std::string &name,std::string const &kw){
 	std::string::size_type pos=std::string::npos;
-	while (std::string::npos != (pos= name.find(kw)))
-			name = name.erase(pos,kw.size());
+	while (std::string::npos != (pos= name.find(kw))){
+			std::string &erased = name.erase(pos,kw.size());
+			(void) erased;
+	}
 
 }
 inline void patchresultforstring(std::string& result) {
 	static const std::string stringid=(typeid(std::string).name());
 	std::string::size_type pos=std::string::npos;
 	while(std::string::npos != (pos=result.find(stringid))){
-		if (!result.compare(pos+stringid.size(),2," >",2)) result = result.erase(pos+stringid.size(),1); // makes templates look nice
-		result = result.replace(pos,stringid.size(),"std::string");
+		if (!result.compare(pos+stringid.size(),2," >",2)) {
+			std::string &erased = result.erase(pos+stringid.size(),1); // makes templates look nice
+			(void) erased;
+		}
+		std::string &replaced = result.replace(pos,stringid.size(),"std::string");
+		(void) replaced;
 	}
 }
 
@@ -114,7 +126,8 @@ inline void patchMSMangling(std::string &name){
 	}
 	std::string::size_type pos=0;
 	while(std::string::npos !=(pos=name.find(" ,",pos))){
-		name = name.erase(pos,1);
+		std::string &erased = name.erase(pos,1);
+		(void) erased;
 		++pos;
 	}
 }

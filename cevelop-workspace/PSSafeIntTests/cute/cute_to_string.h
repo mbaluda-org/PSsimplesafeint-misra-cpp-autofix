@@ -279,7 +279,9 @@ namespace cute_to_string {
 		template <typename T>
 		std::string to_string(T const &t) {
 			std::ostringstream os;
-			return static_cast<std::ostringstream&>(to_stream(os,t)).str();
+			std::ostream &stream = to_stream(os,t);
+			(void) stream;
+			return os.str();
 		}
 	}
 }
