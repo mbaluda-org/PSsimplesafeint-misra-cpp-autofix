@@ -57,17 +57,14 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    
-    - name: create build directory  
-      run: mkdir -p -v ${{github.workspace}}/build
 
-    - name: Configure CMake
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      env:
-        CC:   gcc-15
-        CXX:  g++-15
-      run: CC=gcc CXX=g++ cmake ${{github.workspace}}/cevelop-workspace/PSSafeIntTests/
+    - name: Setup Python@3.13
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.11' 
+    - name: Install Packages
+      run: |
+        pip install -r .github/scripts/requirements.txt
 
     # Add any setup steps before running the `github/codeql-action/init` action.
     # This includes steps like installing compilers or runtimes (`actions/setup-node`
@@ -99,11 +96,12 @@ jobs:
     - name: Run manual build steps
       if: matrix.build-mode == 'manual'
       shell: bash
-      working-directory: ${{github.workspace}}/build
       env:
         CC:   gcc-15
         CXX:  g++-15
-      run: cmake --build . -- CXX_FLAGS="-std=c++20 -DPS_ASSERT_THROWS -O2"
+      run: cmake -B build
+           cmake --build build -- CXX_FLAGS="-std=c++20 -DPS_ASSERT_THROWS -O2"
+           python3 .github/scripts/process_coding_standards_config.py
       
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
