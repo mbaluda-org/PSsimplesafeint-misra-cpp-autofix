@@ -76,7 +76,9 @@ namespace cute {
 #endif
 		}
 		static std::string maskBlanks(std::string in) {
-			std::transform(in.begin(),in.end(),in.begin(),blankToUnderscore());
+			std::string::iterator const transformedEnd =
+					std::transform(in.begin(),in.end(),in.begin(),blankToUnderscore());
+			(void) transformedEnd;
 			return in;
 		}
 	protected:

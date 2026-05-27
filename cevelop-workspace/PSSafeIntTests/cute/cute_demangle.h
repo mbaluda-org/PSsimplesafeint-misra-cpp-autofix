@@ -59,7 +59,7 @@ inline void patch_library_namespace(std::string &mightcontaininlinenamespace) {
 #endif
 	std::string const nothing;
 	while (std::string::npos != (pos= mightcontaininlinenamespace.find(TOREPLACE)))
-			mightcontaininlinenamespace.erase(pos,sizeof(TOREPLACE)-1);
+			mightcontaininlinenamespace = mightcontaininlinenamespace.erase(pos,sizeof(TOREPLACE)-1);
 #undef NS
 #undef XNS
 #undef TOREPLACE
@@ -68,8 +68,8 @@ inline void patchresultforstring(std::string& result) {
 	static const std::string stringid=plain_demangle(typeid(std::string).name());
 	std::string::size_type pos=std::string::npos;
 	while(std::string::npos != (pos=result.find(stringid))){
-		if (!result.compare(pos+stringid.size(),2," >",2)) result.erase(pos+stringid.size(),1); // makes templates look nice
-		result.replace(pos,stringid.size(),"std::string");
+		if (!result.compare(pos+stringid.size(),2," >",2)) result = result.erase(pos+stringid.size(),1); // makes templates look nice
+		result = result.replace(pos,stringid.size(),"std::string");
 	}
 	patch_library_namespace(result);
 }
@@ -93,15 +93,15 @@ namespace cute_demangle_impl {
 inline void removeMSKeyword(std::string &name,std::string const &kw){
 	std::string::size_type pos=std::string::npos;
 	while (std::string::npos != (pos= name.find(kw)))
-			name.erase(pos,kw.size());
+			name = name.erase(pos,kw.size());
 
 }
 inline void patchresultforstring(std::string& result) {
 	static const std::string stringid=(typeid(std::string).name());
 	std::string::size_type pos=std::string::npos;
 	while(std::string::npos != (pos=result.find(stringid))){
-		if (!result.compare(pos+stringid.size(),2," >",2)) result.erase(pos+stringid.size(),1); // makes templates look nice
-		result.replace(pos,stringid.size(),"std::string");
+		if (!result.compare(pos+stringid.size(),2," >",2)) result = result.erase(pos+stringid.size(),1); // makes templates look nice
+		result = result.replace(pos,stringid.size(),"std::string");
 	}
 }
 
@@ -114,7 +114,7 @@ inline void patchMSMangling(std::string &name){
 	}
 	std::string::size_type pos=0;
 	while(std::string::npos !=(pos=name.find(" ,",pos))){
-		name.erase(pos,1);
+		name = name.erase(pos,1);
 		++pos;
 	}
 }
