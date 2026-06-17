@@ -1,0 +1,6 @@
+deviations:
+  - rule-id: RULE-8-20-1
+    query-id: cpp/misra/unsigned-operation-with-constant-operands-wraps
+    justification: "False positive: in hexit(), `x /= 16` is unsigned division by a non-zero constant and cannot wrap; each loop iteration monotonically decreases `x` to 0."
+    paths:
+      - cute_to_string.h
