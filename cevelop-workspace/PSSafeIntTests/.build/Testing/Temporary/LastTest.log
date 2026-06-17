@@ -1,10 +1,10 @@
-Start testing: Jun 17 18:23 UTC
+Start testing: Jun 17 18:26 UTC
 ----------------------------------------------------------
 1/1 Testing: test
 1/1 Test: test
 Command: "/home/runner/work/PSsimplesafeint-misra-cpp-autofix/PSsimplesafeint-misra-cpp-autofix/cevelop-workspace/PSSafeIntTests/.build/PSSafeIntTests"
 Directory: /home/runner/work/PSsimplesafeint-misra-cpp-autofix/PSsimplesafeint-misra-cpp-autofix/cevelop-workspace/PSSafeIntTests/.build
-"test" start time: Jun 17 18:23 UTC
+"test" start time: Jun 17 18:26 UTC
 Output:
 ----------------------------------------------------------
 
@@ -303,8 +303,8 @@ Output:
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test" end time: Jun 17 18:23 UTC
+"test" end time: Jun 17 18:26 UTC
 "test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Jun 17 18:23 UTC
+End testing: Jun 17 18:26 UTC
