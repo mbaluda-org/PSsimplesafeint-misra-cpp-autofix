@@ -1,0 +1,16 @@
+deviations:
+- rule-id: "RULE-8-20-1"
+  query-id: "cpp/misra/unsigned-operation-with-constant-operands-wraps"
+  code-identifier: "rule-8-20-1-hexit-div-no-wrap"
+  justification: >
+    The expression `x /= 16` in `hexit()` is flagged as a potentially-wrapping
+    unsigned operation, but this is a false positive. Integer division of an
+    unsigned value by the positive constant 16 always produces a quotient that
+    is strictly less than or equal to the dividend. For unsigned char (max 255),
+    the largest possible quotient is 255/16 = 15, which fits without wrapping.
+    The query does not model the mathematical invariant that division by a
+    positive constant can never produce a result exceeding the dividend, so it
+    incorrectly treats the compound-assignment `/=` as potentially wrapping.
+  raised-by:
+    name: "Copilot Autofix"
+    date: "2026-06-17"
