@@ -1,10 +1,14 @@
 deviations:
   - rule-id: "RULE-8-20-1"
     query-id: "cpp/misra/unsigned-operation-with-constant-operands-wraps"
-    justification: "False positive: dividing an unsigned value by the positive constant 16 cannot wrap. The quotient is always in the range [0, x], so assigning the result back to T is representable."
-    scope: "Applies only to the repeated division-by-16 step in cute::cute_to_string::hexit."
-    background: "hexit converts an unsigned value to hexadecimal by appending x % 16 and reducing x with x /= 16 until it reaches 0."
+    code-identifier: "cute-to-string-hexit-div16-no-wrap"
+    justification: "False positive: dividing an unsigned value by the positive constant 16 cannot wrap. Division only reduces the value, so the result is always in the range [0, x] and is always representable in T."
+    scope: "Applies only to the x /= 16 statement in the for-loop of cute::cute_to_string::hexit."
+    background: "hexit converts an unsigned value to its hexadecimal string representation by repeatedly extracting the last hex digit via x % 16 and reducing x with x /= 16 until x reaches zero. Division by a positive constant never causes unsigned overflow."
     requirements:
       - "Use only for the x /= 16 statement in cute::cute_to_string::hexit."
-      - "Keep T unsigned and keep the divisor as the positive constant 16."
-    code-identifier: "cute-to-string-hexit-div16-no-wrap"
+      - "T must remain an unsigned integral type."
+      - "The divisor must remain the positive constant 16."
+    raised-by:
+      name: "GitHub Copilot Autofix"
+      date: "2026-06-17"
