@@ -1,0 +1,310 @@
+Start testing: Jun 17 17:03 UTC
+----------------------------------------------------------
+1/1 Testing: test
+1/1 Test: test
+Command: "/home/runner/work/PSsimplesafeint-misra-cpp-autofix/PSsimplesafeint-misra-cpp-autofix/cevelop-workspace/PSSafeIntTests/.build/PSSafeIntTests"
+Directory: /home/runner/work/PSsimplesafeint-misra-cpp-autofix/PSsimplesafeint-misra-cpp-autofix/cevelop-workspace/PSSafeIntTests/.build
+"test" start time: Jun 17 17:03 UTC
+Output:
+----------------------------------------------------------
+
+#beginning AllTests 42
+
+#starting ui16intExists
+
+#success ui16intExists OK
+
+#starting ui16NotEqualAutomaticInCpp20
+
+#success ui16NotEqualAutomaticInCpp20 OK
+
+#starting ui16canbeadded
+
+#success ui16canbeadded OK
+
+#starting ui16canbeaddedto
+
+#success ui16canbeaddedto OK
+
+#starting ui16canbesubtracted
+
+#success ui16canbesubtracted OK
+
+#starting ui16canbesubtractedfrom
+
+#success ui16canbesubtractedfrom OK
+
+#starting ui16canbemultiplied
+
+#success ui16canbemultiplied OK
+
+#starting ui16canbemultipliedwith
+
+#success ui16canbemultipliedwith OK
+
+#starting ui16canbedivided
+
+#success ui16canbedivided OK
+
+#starting ui16canbedividedby
+
+#success ui16canbedividedby OK
+
+#starting ui16canbemoduloed
+
+#success ui16canbemoduloed OK
+
+#starting ui16canbemoduloedby
+
+#success ui16canbemoduloedby OK
+
+#starting ui16canbeandedwith
+
+#success ui16canbeandedwith OK
+
+#starting ui16canbeanded
+
+#success ui16canbeanded OK
+
+#starting ui16canbeored
+
+#success ui16canbeored OK
+
+#starting ui16canbeoredwith
+
+#success ui16canbeoredwith OK
+
+#starting ui16canbexoredwith
+
+#success ui16canbexoredwith OK
+
+#starting ui16canbexored
+
+#success ui16canbexored OK
+
+#starting ui16canbenegated
+
+#success ui16canbenegated OK
+
+#starting ui16canbeleftshifted
+
+#success ui16canbeleftshifted OK
+
+#starting ui16canbeleftshiftedby
+
+#success ui16canbeleftshiftedby OK
+
+#starting ui16canberightshifted
+
+#success ui16canberightshifted OK
+
+#starting ui16canberightshiftedby
+
+#success ui16canberightshiftedby OK
+
+#starting si8canbeaddednormal
+
+#success si8canbeaddednormal OK
+
+#starting si8Negation
+
+#success si8Negation OK
+
+#starting si8negationminintidempotent
+
+#success si8negationminintidempotent OK
+
+#starting si8overflowmakesitNegative
+
+#success si8overflowmakesitNegative OK
+
+#starting si8subtraction
+
+#success si8subtraction OK
+
+#starting si8subtractionwraps
+
+#success si8subtractionwraps OK
+
+#starting si8multiplication
+
+#success si8multiplication OK
+
+#starting si8division
+
+#success si8division OK
+
+#starting ui16canbepreincremented
+
+#success ui16canbepreincremented OK
+
+#starting ui16canbepostincremented
+
+#success ui16canbepostincremented OK
+
+#starting ui16canbepredecremented
+
+#success ui16canbepredecremented OK
+
+#starting ui16canbepostdecremented
+
+#success ui16canbepostdecremented OK
+
+#starting checkedFromInt
+
+#success checkedFromInt OK
+
+#starting si8OutputAsInteger
+
+#success si8OutputAsInteger OK
+
+#starting ui8OutputAsInteger
+
+#success ui8OutputAsInteger OK
+
+#starting ui16canbecompared
+
+#success ui16canbecompared OK
+
+#starting ui16canNotbecomparedwithui8
+
+#success ui16canNotbecomparedwithui8 OK
+
+#starting ui32CanNotbeComparedwithlong
+
+#success ui32CanNotbeComparedwithlong OK
+
+#starting _testing::signedIntegerBoundaryTestResultRecovery
+
+#success _testing::signedIntegerBoundaryTestResultRecovery OK
+
+#ending AllTests
+
+#beginning CodeGenBenchmark 22
+
+#starting codegenAdditionTest
+
+#success codegenAdditionTest OK
+
+#starting testUBSanWithSignedOverflow
+
+#success testUBSanWithSignedOverflow OK
+
+#starting testNoSignedOverflow
+
+#success testNoSignedOverflow OK
+
+#starting codegenMultiplicationTest
+
+#success codegenMultiplicationTest OK
+
+#starting codegenSumThirdsTest
+
+#success codegenSumThirdsTest OK
+
+#starting codegenSubtractionTest
+
+#success codegenSubtractionTest OK
+
+#starting int32::codegenAdditionTest
+
+#success int32::codegenAdditionTest OK
+
+#starting int32::codegenMultiplicationTest
+
+#success int32::codegenMultiplicationTest OK
+
+#starting int32::codegenSumThirdsTest
+
+#success int32::codegenSumThirdsTest OK
+
+#starting int32::codegenSubtractionTest
+
+#success int32::codegenSubtractionTest OK
+
+#starting uint32::codegenAdditionTest
+
+#success uint32::codegenAdditionTest OK
+
+#starting uint32::codegenMultiplicationTest
+
+#success uint32::codegenMultiplicationTest OK
+
+#starting uint32::codegenSumThirdsTest
+
+#success uint32::codegenSumThirdsTest OK
+
+#starting uint32::codegenSubtractionTest
+
+#success uint32::codegenSubtractionTest OK
+
+#starting int16::codegenAdditionTest
+
+#success int16::codegenAdditionTest OK
+
+#starting int16::codegenMultiplicationTest
+
+#success int16::codegenMultiplicationTest OK
+
+#starting int16::codegenSumThirdsTest
+
+#success int16::codegenSumThirdsTest OK
+
+#starting int16::codegenSubtractionTest
+
+#success int16::codegenSubtractionTest OK
+
+#starting int64::codegenAdditionTest
+
+#success int64::codegenAdditionTest OK
+
+#starting int64::codegenMultiplicationTest
+
+#success int64::codegenMultiplicationTest OK
+
+#starting int64::codegenSumThirdsTest
+
+#success int64::codegenSumThirdsTest OK
+
+#starting int64::codegenSubtractionTest
+
+#success int64::codegenSubtractionTest OK
+
+#ending CodeGenBenchmark
+
+#beginning TestForZeroReturnAssertWithNDEBUG 6
+
+#starting thisIsATestForZeroReturnAssertWithNDEBUGTest
+
+#success thisIsATestForZeroReturnAssertWithNDEBUGTest OK
+
+#starting ModuloTestForZeroReturnAssertWithNDEBUGTest
+
+#success ModuloTestForZeroReturnAssertWithNDEBUGTest OK
+
+#starting ShiftLeftTestForZeroReturnAssertWithNDEBUGTest
+
+#success ShiftLeftTestForZeroReturnAssertWithNDEBUGTest OK
+
+#starting ShiftRightTestForZeroReturnAssertWithNDEBUGTest
+
+#success ShiftRightTestForZeroReturnAssertWithNDEBUGTest OK
+
+#starting cppnowtalk::testUBforint
+
+#success cppnowtalk::testUBforint OK
+
+#starting cppnowtalk::testNoUBforunsigned
+
+#success cppnowtalk::testNoUBforunsigned OK
+
+#ending TestForZeroReturnAssertWithNDEBUG
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test" end time: Jun 17 17:03 UTC
+"test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jun 17 17:03 UTC
