@@ -60,7 +60,8 @@ inline void patch_library_namespace(std::string &mightcontaininlinenamespace) {
 	std::string const nothing;
 	pos = mightcontaininlinenamespace.find(TOREPLACE);
 	while (std::string::npos != pos) {
-		pos = mightcontaininlinenamespace.erase(pos,sizeof(TOREPLACE)-1).find(TOREPLACE, pos);
+		std::string & shortenedname = mightcontaininlinenamespace.erase(pos,sizeof(TOREPLACE)-1);
+		pos = shortenedname.find(TOREPLACE);
 	}
 #undef NS
 #undef XNS
