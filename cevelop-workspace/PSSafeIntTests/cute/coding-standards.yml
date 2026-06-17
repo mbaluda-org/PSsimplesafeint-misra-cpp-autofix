@@ -11,4 +11,4 @@ deviations:
     code-identifier: rule-8-20-1-hexit-division
     raised-by:
       name: GitHub Copilot Autofix
-      date: 2026-06-17
+      date: "2026-06-17"
