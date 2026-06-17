@@ -1,0 +1,14 @@
+deviations:
+  - rule-id: "RULE-8-18-2"
+    query-id: "cpp/misra/result-of-an-assignment-operator-should-not-be-used"
+    justification: >
+      The files in this directory are part of the CUTE (C++ Unit Testing Easier)
+      third-party test framework and are not intended to be MISRA C++ compliant.
+      They make pervasive use of dynamic memory allocation via std::string and
+      other C++ Standard Library facilities that are themselves non-compliant.
+      The assignment-in-condition pattern used in while-loop conditions
+      (e.g. while((pos=str.find(...))!=npos)) is a deliberate, well-understood
+      C++ search idiom in this context, not an accidental misuse of assignment.
+    raised-by:
+      name: mbaluda-autofix
+      date: 2026-06-17
