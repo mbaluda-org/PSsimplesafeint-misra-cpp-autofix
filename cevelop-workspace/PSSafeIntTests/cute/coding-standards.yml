@@ -1,6 +1,14 @@
 deviations:
   - rule-id: RULE-8-20-1
     query-id: cpp/misra/unsigned-operation-with-constant-operands-wraps
-    justification: "False positive: in hexit(), `x /= 16` is unsigned division by a non-zero constant and cannot wrap; each loop iteration monotonically decreases `x` to 0."
-    paths:
-      - cute_to_string.h
+    justification: "False positive: in hexit(), `x /= 16` is unsigned division by a non-zero constant and cannot wrap; each iteration monotonically decreases x to 0."
+    scope: "Applies only to the division step in cute::cute_to_string::hexit."
+    background: "hexit() formats an unsigned value as hexadecimal by repeatedly appending the least-significant hex digit and dividing by 16."
+    requirements:
+      - "Use only for the marked `x /= 16` statement in cute_to_string.h."
+      - "The divisor must remain the non-zero constant 16."
+      - "The loop variable must remain unsigned and monotonically decrease to 0."
+    code-identifier: rule-8-20-1-hexit-division
+    raised-by:
+      name: GitHub Copilot Autofix
+      date: 2026-06-17
