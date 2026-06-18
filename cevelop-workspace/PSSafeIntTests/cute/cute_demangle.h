@@ -58,7 +58,9 @@ inline void patch_library_namespace(std::string &mightcontaininlinenamespace) {
 #define TOREPLACE "::" NS(_GLIBCXX_NAMESPACE_CXX11)
 #endif
 	std::string const nothing;
-	while (std::string::npos != (pos= mightcontaininlinenamespace.find(TOREPLACE)))
+	for (pos = mightcontaininlinenamespace.find(TOREPLACE);
+	     std::string::npos != pos;
+	     pos = mightcontaininlinenamespace.find(TOREPLACE))
 			mightcontaininlinenamespace.erase(pos,sizeof(TOREPLACE)-1);
 #undef NS
 #undef XNS
@@ -67,7 +69,9 @@ inline void patch_library_namespace(std::string &mightcontaininlinenamespace) {
 inline void patchresultforstring(std::string& result) {
 	static const std::string stringid=plain_demangle(typeid(std::string).name());
 	std::string::size_type pos=std::string::npos;
-	while(std::string::npos != (pos=result.find(stringid))){
+	for (pos = result.find(stringid);
+	     std::string::npos != pos;
+	     pos = result.find(stringid)) {
 		if (!result.compare(pos+stringid.size(),2," >",2)) result.erase(pos+stringid.size(),1); // makes templates look nice
 		result.replace(pos,stringid.size(),"std::string");
 	}
