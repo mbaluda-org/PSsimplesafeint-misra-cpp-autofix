@@ -869,6 +869,7 @@ void testNoUBforunsigned() {
 }
 }
 
+namespace {
 bool runAllTests(int argc, char const * const *argv) {
     cute::suite TestForZeroReturnAssertWithNDEBUG = make_suite_TestForZeroReturnAssertWithNDEBUG();
     TestForZeroReturnAssertWithNDEBUG.push_back(CUTE(cppnowtalk::testUBforint));
@@ -925,6 +926,7 @@ bool runAllTests(int argc, char const * const *argv) {
     success = runner(make_suite_CodeGenBenchmark(),"CodeGenBenchmark") && success;
     success &= runner(TestForZeroReturnAssertWithNDEBUG, "TestForZeroReturnAssertWithNDEBUG");
     return success;
+}
 }
 
 int main(int argc, char const * const *argv) {
