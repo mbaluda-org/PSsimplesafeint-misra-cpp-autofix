@@ -870,7 +870,7 @@ void testNoUBforunsigned() {
 }
 
 namespace {
-static bool runAllTests(std::ptrdiff_t argc, char const * const *argv) {
+bool runAllTests(std::ptrdiff_t argc, char const * const *argv) {
     cute::suite TestForZeroReturnAssertWithNDEBUG = make_suite_TestForZeroReturnAssertWithNDEBUG();
     TestForZeroReturnAssertWithNDEBUG.push_back(CUTE(cppnowtalk::testUBforint));
     TestForZeroReturnAssertWithNDEBUG.push_back(CUTE(cppnowtalk::testNoUBforunsigned));
