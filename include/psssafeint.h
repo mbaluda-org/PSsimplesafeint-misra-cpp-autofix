@@ -602,12 +602,7 @@ requires same_signedness<LEFT,RIGHT> && std::is_unsigned_v<detail_::ULT<LEFT>>
 {
     using result_t=std::conditional_t<sizeof(LEFT)>=sizeof(RIGHT),LEFT,RIGHT>;
     using ult = detail_::ULT<result_t>;
-#pragma GCC diagnostic push
-#if defined(__GNUG__) && !defined(__clang__)
-#pragma GCC diagnostic ignored "-Wterminate"
-#endif
     ps_assert(result_t{}, r != RIGHT{} && " division by zero");
-#pragma GCC diagnostic pop
     return static_cast<result_t>(
             static_cast<ult>(
                     promote_and_extend_to_unsigned<ult>(l)
@@ -696,12 +691,7 @@ constexpr LEFT
 operator<<(LEFT l, RIGHT r) NOEXCEPT_WITH_THROWING_ASSERTS
 requires std::is_unsigned_v<detail_::ULT<LEFT>> && std::is_unsigned_v<detail_::ULT<RIGHT>>
 {
-#pragma GCC diagnostic push
-#if defined(__GNUG__) && !defined(__clang__)
-#pragma GCC diagnostic ignored "-Wterminate"
-#endif
     ps_assert(LEFT{},static_cast<size_t>(promote_keep_signedness(r)) < sizeof(LEFT)*CHAR_BIT && "trying to shift by too many bits");
-#pragma GCC diagnostic pop
     return static_cast<LEFT>(promote_keep_signedness(l)<<promote_keep_signedness(r));
 }
 template<a_safeint LEFT, a_safeint RIGHT>
@@ -717,12 +707,7 @@ constexpr LEFT
 operator>>(LEFT l, RIGHT r) NOEXCEPT_WITH_THROWING_ASSERTS
 requires std::is_unsigned_v<detail_::ULT<LEFT>> && std::is_unsigned_v<detail_::ULT<RIGHT>>
 {
-#pragma GCC diagnostic push
-#if defined(__GNUG__) && !defined(__clang__)
-#pragma GCC diagnostic ignored "-Wterminate"
-#endif
     ps_assert(LEFT{},static_cast<size_t>(promote_keep_signedness(r)) < sizeof(LEFT)*CHAR_BIT && "trying to shift by too many bits");
-#pragma GCC diagnostic pop
     return static_cast<LEFT>(promote_keep_signedness(l)>>promote_keep_signedness(r));
 }
 template<a_safeint LEFT, a_safeint RIGHT>

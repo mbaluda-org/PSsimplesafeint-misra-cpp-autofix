@@ -842,15 +842,8 @@ void testUBforint() {
     std::ostringstream out{};
     out << 65535 * 32768 << '\n';
     // prints: 2147450880
-#pragma GCC diagnostic push
-#ifdef __clang__
-    #pragma clang diagnostic ignored "-Winteger-overflow"
-#else
-    #pragma GCC diagnostic ignored "-Woverflow"
-#endif
     out << 65536 * 32768 << '\n';
     //../src/Test.cpp:421:18: error: integer overflow in expression of type 'int' results in '-2147483648' [-Werror=overflow]
-#pragma GCC diagnostic pop
     // prints: ?
     out << std::boolalpha << std::numeric_limits<int>::is_modulo << '\n';
     ASSERT_EQUAL("2147450880\n-2147483648\nfalse\n",out.str());

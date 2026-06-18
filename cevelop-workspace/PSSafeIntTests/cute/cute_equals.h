@@ -49,10 +49,7 @@ namespace cute {
 				,ActualValue const &actual
 				,DeltaValue const &delta) {
 			using std::abs; // allow for user-defined types with abs overload
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
 			return bool(abs(delta) >= abs(expected-actual)); // Accommodate non-standard boolean type with explicit conversion
-#pragma GCC diagnostic pop
 		}
 		template <typename ExpectedValue, typename ActualValue, bool select_non_floating_point_type>
 		bool do_equals_floating(ExpectedValue const &expected
