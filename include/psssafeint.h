@@ -15,7 +15,7 @@ inline void assert_failure(char const *) {}
 #ifdef NDEBUG
   #define ps_assert(default_value, cond) \
     if (std::is_constant_evaluated()) {\
-     if (not (cond)) psssint::detail_::assert_failure(#cond); /* compile error in constant evaluation */\
+     if (not (cond)) psssint::detail_::assert_failure(#cond);\
     } else {\
      if (not (cond) ) return (default_value);/* last resort avoid UB */\
     }
