@@ -7,7 +7,6 @@
 #include "CodeGenBenchmark.h"
 #include <type_traits>
 #include <cstddef>
-#include <cstdint>
 
 
 
@@ -871,7 +870,7 @@ void testNoUBforunsigned() {
 }
 
 namespace {
-static bool runAllTests(std::uint32_t argc, char const * const *argv) {
+static bool runAllTests(std::size_t argc, char const * const *argv) {
     cute::suite TestForZeroReturnAssertWithNDEBUG = make_suite_TestForZeroReturnAssertWithNDEBUG();
     TestForZeroReturnAssertWithNDEBUG.push_back(CUTE(cppnowtalk::testUBforint));
     TestForZeroReturnAssertWithNDEBUG.push_back(CUTE(cppnowtalk::testNoUBforunsigned));
@@ -931,11 +930,8 @@ static bool runAllTests(std::uint32_t argc, char const * const *argv) {
 }
 
 int main(int argc, char const * const *argv) {
-    if (argc < 0) {
-        return EXIT_FAILURE;
-    }
     try {
-        return runAllTests(static_cast<std::uint32_t>(argc), argv) ? EXIT_SUCCESS : EXIT_FAILURE;
+        return runAllTests(static_cast<std::size_t>(argc), argv) ? EXIT_SUCCESS : EXIT_FAILURE;
     } catch (...) {
         return EXIT_FAILURE;
     }
