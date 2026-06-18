@@ -931,8 +931,8 @@ bool runAllTests(std::ptrdiff_t argc, char const * const *argv) {
 
 int main(int argc, char const * const *argv) {
     try {
-        auto const argCount = static_cast<std::ptrdiff_t>(argc);
-        return runAllTests(argCount, argv) ? EXIT_SUCCESS : EXIT_FAILURE;
+        auto const argcAsPtrDiff = static_cast<std::ptrdiff_t>(argc);
+        return runAllTests(argcAsPtrDiff, argv) ? EXIT_SUCCESS : EXIT_FAILURE;
     } catch (...) {
         return EXIT_FAILURE;
     }
