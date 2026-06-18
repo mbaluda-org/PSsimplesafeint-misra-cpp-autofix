@@ -439,8 +439,7 @@ template<a_safeint E>
 constexpr E&
 operator++(E& l) noexcept
 {
-    l = static_cast<E>(1u + promote_to_unsigned(l));
-    return l;
+    return l = static_cast<E>(1u + promote_to_unsigned(l));
 }
 
 template<a_safeint E>

@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/PSSafeIntTests.dir/link.d CMakeFiles/PSSafeIntTests.dir/src/CodeGenBenchmark.cpp.o CMakeFiles/PSSafeIntTests.dir/src/Test.cpp.o CMakeFiles/PSSafeIntTests.dir/src/TestForZeroReturnAssertWithNDEBUG.cpp.o CMakeFiles/PSSafeIntTests.dir/src/numericLimitsStaticTests.cpp.o -o PSSafeIntTests
