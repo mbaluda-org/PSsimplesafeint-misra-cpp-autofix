@@ -869,7 +869,7 @@ void testNoUBforunsigned() {
 }
 }
 
-bool runAllTests(int argc, char const *argv[]) {
+bool runAllTests(int argc, char const * const *argv) {
     cute::suite TestForZeroReturnAssertWithNDEBUG = make_suite_TestForZeroReturnAssertWithNDEBUG();
     TestForZeroReturnAssertWithNDEBUG.push_back(CUTE(cppnowtalk::testUBforint));
     TestForZeroReturnAssertWithNDEBUG.push_back(CUTE(cppnowtalk::testNoUBforunsigned));
@@ -927,6 +927,6 @@ bool runAllTests(int argc, char const *argv[]) {
     return success;
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const * const *argv) {
     return runAllTests(argc, argv) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
