@@ -870,7 +870,7 @@ void testNoUBforunsigned() {
 }
 
 namespace {
-static bool runAllTests(std::size_t argc, char const * const *argv) {
+static bool runAllTests(std::ptrdiff_t argc, char const * const *argv) {
     cute::suite TestForZeroReturnAssertWithNDEBUG = make_suite_TestForZeroReturnAssertWithNDEBUG();
     TestForZeroReturnAssertWithNDEBUG.push_back(CUTE(cppnowtalk::testUBforint));
     TestForZeroReturnAssertWithNDEBUG.push_back(CUTE(cppnowtalk::testNoUBforunsigned));
@@ -931,7 +931,7 @@ static bool runAllTests(std::size_t argc, char const * const *argv) {
 
 int main(int argc, char const * const *argv) {
     try {
-        return runAllTests(static_cast<std::size_t>(argc), argv) ? EXIT_SUCCESS : EXIT_FAILURE;
+        return runAllTests(argc, argv) ? EXIT_SUCCESS : EXIT_FAILURE;
     } catch (...) {
         return EXIT_FAILURE;
     }
