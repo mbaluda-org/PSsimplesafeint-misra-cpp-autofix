@@ -447,10 +447,8 @@ operator++(E& l) noexcept
             auto const incremented = static_cast<std::intmax_t>(to_underlying(l)) + static_cast<std::intmax_t>(1);
             l = static_cast<E>(static_cast<underlying_t>(incremented));
         } else {
-            auto const current = static_cast<std::uintmax_t>(to_underlying(l));
-            auto const max = static_cast<std::uintmax_t>(to_underlying(std::numeric_limits<E>::max()));
-            auto const remaining = max - current;
-            auto const incremented = max - (remaining - static_cast<std::uintmax_t>(1));
+            auto incremented = static_cast<std::uintmax_t>(to_underlying(l));
+            ++incremented;
             l = static_cast<E>(static_cast<underlying_t>(incremented));
         }
     }
