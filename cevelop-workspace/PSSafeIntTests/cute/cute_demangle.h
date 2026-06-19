@@ -83,6 +83,7 @@ inline void patchresultforstring(std::string& result) {
 }
 inline std::string demangle(char const *name){
 	if (name == nullptr) return "unknown";
+	// codeql[cpp/misra/rule-21-6-1]
 	std::string result(cute_impl_demangle::plain_demangle(name));
 #if defined(_LIBCPP_ABI_NAMESPACE) || defined(_LIBCPP_NAMESPACE) || defined(_GLIBCXX_USE_CXX11_ABI)
 	cute_impl_demangle::patchresultforstring(result);
