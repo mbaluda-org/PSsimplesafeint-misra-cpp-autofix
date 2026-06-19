@@ -441,14 +441,13 @@ operator++(E& l) noexcept
 {
     using underlying_t = std::underlying_type_t<E>;
     using promoted_t = std::conditional_t<std::numeric_limits<underlying_t>::is_signed, std::intmax_t, std::uintmax_t>;
-    underlying_t const current = to_underlying(l);
-    underlying_t const max_value = to_underlying(std::numeric_limits<E>::max());
-    promoted_t const promoted_current = static_cast<promoted_t>(current);
-    promoted_t const promoted_max = static_cast<promoted_t>(max_value);
+    promoted_t const promoted_current = static_cast<promoted_t>(to_underlying(l));
+    promoted_t const promoted_max = static_cast<promoted_t>(to_underlying(std::numeric_limits<E>::max()));
     if (promoted_current >= promoted_max) {
         l = std::numeric_limits<E>::lowest();
     } else {
-        auto const promoted_next = static_cast<promoted_t>(promoted_current + static_cast<promoted_t>(1));
+        auto promoted_next = promoted_current;
+        ++promoted_next;
         auto const next_value = static_cast<underlying_t>(promoted_next);
         l = static_cast<E>(next_value);
     }

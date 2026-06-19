@@ -68,6 +68,7 @@ inline void patch_library_namespace(std::string &mightcontaininlinenamespace) {
 #undef TOREPLACE
 }
 inline void patchresultforstring(std::string& result) {
+	// codeql[cpp/misra/rule-21-6-1]
 	static const std::string stringid=plain_demangle(typeid(std::string).name());
 	std::string::size_type pos=std::string::npos;
 	for (pos = result.find(stringid);
@@ -86,6 +87,7 @@ inline std::string demangle(char const *name){
 	// codeql[cpp/misra/rule-21-6-1]
 	std::string result(cute_impl_demangle::plain_demangle(name));
 #if defined(_LIBCPP_ABI_NAMESPACE) || defined(_LIBCPP_NAMESPACE) || defined(_GLIBCXX_USE_CXX11_ABI)
+	// codeql[cpp/misra/rule-21-6-1]
 	cute_impl_demangle::patchresultforstring(result);
 #endif
 	return result;
