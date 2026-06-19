@@ -442,7 +442,7 @@ operator++(E& l) noexcept
     using underlying_t = std::underlying_type_t<E>;
     underlying_t const current = to_underlying(l);
     underlying_t const max_value = to_underlying(std::numeric_limits<E>::max());
-    if (current == max_value) {
+    if (current >= max_value) {
         l = std::numeric_limits<E>::lowest();
     } else {
         auto const next_value = static_cast<underlying_t>(current + static_cast<underlying_t>(1));
