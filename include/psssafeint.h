@@ -439,10 +439,13 @@ template<a_safeint E>
 constexpr E&
 operator++(E& l) noexcept
 {
+    using underlying_t = std::underlying_type_t<E>;
+    using calc_t = std::conditional_t<std::numeric_limits<underlying_t>::is_signed, std::intmax_t, std::uintmax_t>;
     if (l == std::numeric_limits<E>::max()) {
         l = std::numeric_limits<E>::lowest();
     } else {
-        l = static_cast<E>(promote_keep_signedness(l) + 1);
+        auto const incremented = static_cast<calc_t>(to_underlying(l)) + static_cast<calc_t>(1);
+        l = static_cast<E>(static_cast<underlying_t>(incremented));
     }
     return l;
 }
