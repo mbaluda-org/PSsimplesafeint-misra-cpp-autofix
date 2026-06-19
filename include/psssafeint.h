@@ -439,7 +439,11 @@ template<a_safeint E>
 constexpr E&
 operator++(E& l) noexcept
 {
-    l = static_cast<E>(1u + promote_to_unsigned(l));
+    if (l == std::numeric_limits<E>::max()) {
+        l = std::numeric_limits<E>::lowest();
+    } else {
+        l = static_cast<E>(promote_keep_signedness(l) + 1);
+    }
     return l;
 }
 
