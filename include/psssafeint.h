@@ -440,12 +440,19 @@ constexpr E&
 operator++(E& l) noexcept
 {
     using underlying_t = std::underlying_type_t<E>;
-    using calc_t = std::conditional_t<std::numeric_limits<underlying_t>::is_signed, std::intmax_t, std::uintmax_t>;
     if (l == std::numeric_limits<E>::max()) {
         l = std::numeric_limits<E>::lowest();
     } else {
-        auto const incremented = static_cast<calc_t>(to_underlying(l)) + static_cast<calc_t>(1);
-        l = static_cast<E>(static_cast<underlying_t>(incremented));
+        if constexpr(std::numeric_limits<underlying_t>::is_signed) {
+            auto const incremented = static_cast<std::intmax_t>(to_underlying(l)) + static_cast<std::intmax_t>(1);
+            l = static_cast<E>(static_cast<underlying_t>(incremented));
+        } else {
+            auto const current = static_cast<std::uintmax_t>(to_underlying(l));
+            auto const max = static_cast<std::uintmax_t>(to_underlying(std::numeric_limits<E>::max()));
+            auto const remaining = max - current;
+            auto const incremented = max - (remaining - static_cast<std::uintmax_t>(1));
+            l = static_cast<E>(static_cast<underlying_t>(incremented));
+        }
     }
     return l;
 }
