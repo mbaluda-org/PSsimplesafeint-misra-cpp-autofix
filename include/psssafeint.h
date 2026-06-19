@@ -440,8 +440,8 @@ constexpr E&
 operator++(E& l) noexcept
 {
     using underlying_t = std::underlying_type_t<E>;
-    auto const current = to_underlying(l);
-    auto const max_value = to_underlying(std::numeric_limits<E>::max());
+    underlying_t const current = to_underlying(l);
+    underlying_t const max_value = to_underlying(std::numeric_limits<E>::max());
     if (current == max_value) {
         l = std::numeric_limits<E>::lowest();
     } else {
