@@ -440,10 +440,12 @@ constexpr E&
 operator++(E& l) noexcept
 {
     using underlying_t = std::underlying_type_t<E>;
-    if (l == std::numeric_limits<E>::max()) {
+    bool const at_max = (l == std::numeric_limits<E>::max());
+    if (at_max) {
         l = std::numeric_limits<E>::lowest();
     } else {
-        if constexpr(std::numeric_limits<underlying_t>::is_signed) {
+        constexpr bool underlying_is_signed = std::numeric_limits<underlying_t>::is_signed;
+        if constexpr(underlying_is_signed) {
             auto const incremented = static_cast<std::intmax_t>(to_underlying(l)) + static_cast<std::intmax_t>(1);
             l = static_cast<E>(static_cast<underlying_t>(incremented));
         } else {
