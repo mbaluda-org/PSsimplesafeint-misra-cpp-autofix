@@ -746,7 +746,7 @@ void ui16canbecompared(){
     auto l = 0x00ff_ui16;
     auto s = 0x000f_ui16;
 
-	ASSERTM("check comparison", l != s && s < l && l >= s && !(l < s) && ! (l <= s));
+	ASSERTM("check comparison", l != s && (s < l) && (l >= s) && !(l < s) && ! (l <= s));
 }
 
 void ui16canNotbecomparedwithui8() {
