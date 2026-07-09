@@ -37,8 +37,9 @@ namespace cute {
 
 namespace cute_impl_demangle {
 inline std::string plain_demangle(char const *name){
-	if (!name) return "unknown";
+	if (name == nullptr) return "unknown";
 	char const *toBeFreed = abi::__cxa_demangle(name,nullptr,nullptr,nullptr);
+	// codeql[cpp/misra/rule-21-6-1]
 	std::string result(toBeFreed?toBeFreed:name);
 	::free(const_cast<char*>(toBeFreed));
 	return result;
@@ -58,16 +59,21 @@ inline void patch_library_namespace(std::string &mightcontaininlinenamespace) {
 #define TOREPLACE "::" NS(_GLIBCXX_NAMESPACE_CXX11)
 #endif
 	std::string const nothing;
-	while (std::string::npos != (pos= mightcontaininlinenamespace.find(TOREPLACE)))
+	for (pos = mightcontaininlinenamespace.find(TOREPLACE);
+	     std::string::npos != pos;
+	     pos = mightcontaininlinenamespace.find(TOREPLACE))
 			mightcontaininlinenamespace.erase(pos,sizeof(TOREPLACE)-1);
 #undef NS
 #undef XNS
 #undef TOREPLACE
 }
 inline void patchresultforstring(std::string& result) {
+	// codeql[cpp/misra/rule-21-6-1]
 	static const std::string stringid=plain_demangle(typeid(std::string).name());
 	std::string::size_type pos=std::string::npos;
-	while(std::string::npos != (pos=result.find(stringid))){
+	for (pos = result.find(stringid);
+	     std::string::npos != pos;
+	     pos = result.find(stringid)) {
 		if (!result.compare(pos+stringid.size(),2," >",2)) result.erase(pos+stringid.size(),1); // makes templates look nice
 		result.replace(pos,stringid.size(),"std::string");
 	}
@@ -77,9 +83,11 @@ inline void patchresultforstring(std::string& result) {
 
 }
 inline std::string demangle(char const *name){
-	if (!name) return "unknown";
+	if (name == nullptr) return "unknown";
+	// codeql[cpp/misra/rule-21-6-1]
 	std::string result(cute_impl_demangle::plain_demangle(name));
 #if defined(_LIBCPP_ABI_NAMESPACE) || defined(_LIBCPP_NAMESPACE) || defined(_GLIBCXX_USE_CXX11_ABI)
+	// codeql[cpp/misra/rule-21-6-1]
 	cute_impl_demangle::patchresultforstring(result);
 #endif
 	return result;
