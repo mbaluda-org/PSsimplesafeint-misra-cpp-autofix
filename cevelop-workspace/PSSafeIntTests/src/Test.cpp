@@ -869,7 +869,8 @@ void testNoUBforunsigned() {
 }
 }
 
-bool runAllTests(int argc, char const *argv[]) {
+namespace {
+bool runAllTests(std::ptrdiff_t argc, char const * const *argv) {
     cute::suite TestForZeroReturnAssertWithNDEBUG = make_suite_TestForZeroReturnAssertWithNDEBUG();
     TestForZeroReturnAssertWithNDEBUG.push_back(CUTE(cppnowtalk::testUBforint));
     TestForZeroReturnAssertWithNDEBUG.push_back(CUTE(cppnowtalk::testNoUBforunsigned));
@@ -918,15 +919,21 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(ui16canNotbecomparedwithui8));
 	s.push_back(CUTE(ui32CanNotbeComparedwithlong));
 	s.push_back(CUTE(_testing::signedIntegerBoundaryTestResultRecovery));
-	cute::xml_file_opener xmlfile(argc, argv);
+	cute::xml_file_opener xmlfile(static_cast<int>(argc), argv);
     cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
-    auto runner = cute::makeRunner(lis, argc, argv);
+    auto runner = cute::makeRunner(lis, static_cast<int>(argc), argv);
     bool success = runner(s, "AllTests");
     success = runner(make_suite_CodeGenBenchmark(),"CodeGenBenchmark") && success;
     success &= runner(TestForZeroReturnAssertWithNDEBUG, "TestForZeroReturnAssertWithNDEBUG");
     return success;
 }
+}
 
-int main(int argc, char const *argv[]) {
-    return runAllTests(argc, argv) ? EXIT_SUCCESS : EXIT_FAILURE;
+int main(int argc, char const * const *argv) {
+    try {
+        auto const argcAsPtrDiff = static_cast<std::ptrdiff_t>(argc);
+        return runAllTests(argcAsPtrDiff, argv) ? EXIT_SUCCESS : EXIT_FAILURE;
+    } catch (...) {
+        return EXIT_FAILURE;
+    }
 }
