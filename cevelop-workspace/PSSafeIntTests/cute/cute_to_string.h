@@ -59,6 +59,7 @@ namespace cute_to_string {
 		std::string hexit(T const &t){ // must be an unsigned type
 			std::string hexed;
 			if (t == 0) hexed+='0';
+			// codeql::misra_deviation_next_line("rule-8-20-1-hexit-div-no-wrap")
 			for (T x=t;x>0;x /= 16){
 				hexed += "0123456789ABCDEF"[x%16];
 			}
