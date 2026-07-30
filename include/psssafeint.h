@@ -89,7 +89,7 @@ enum class [[nodiscard]] si64: std::int64_t{ tag_to_prevent_mixing_other_enums }
 
 inline namespace literals {
 consteval
-si8 operator""_si8(unsigned long long val) {
+si8 operator""_si8(unsigned long long val) noexcept {
     if (val <= std::numeric_limits<std::underlying_type_t<si8>>::max()) {
         return si8(val);
     } else {
@@ -99,7 +99,7 @@ si8 operator""_si8(unsigned long long val) {
 
 
 consteval
-si16 operator""_si16(unsigned long long val) {
+si16 operator""_si16(unsigned long long val) noexcept {
     if (val <= std::numeric_limits<std::underlying_type_t<si16>>::max()) {
         return si16(val);
     } else {
@@ -109,7 +109,7 @@ si16 operator""_si16(unsigned long long val) {
 
 
 consteval
-si32 operator""_si32(unsigned long long val) {
+si32 operator""_si32(unsigned long long val) noexcept {
     if (val <= std::numeric_limits<std::underlying_type_t<si32>>::max()) {
         return si32(val);
     } else {
@@ -119,7 +119,7 @@ si32 operator""_si32(unsigned long long val) {
 
 
 consteval
-si64 operator""_si64(unsigned long long val) {
+si64 operator""_si64(unsigned long long val) noexcept {
     if (val <= std::numeric_limits<std::underlying_type_t<si64>>::max()) {
         return si64(val);
     } else {
@@ -348,9 +348,8 @@ abs_promoted_and_extended_as_unsigned(E val) noexcept
  requires (std::numeric_limits<TARGET>::is_signed)
 { // promote to unsigned for wrap around arithmetic removing sign if negative
   // return just the bits for std::numeric_limits<TARGET>::min()
-       using promoted_t = detail_::promoted_t<E>;
-       using u_result_t = std::conditional_t< (sizeof(TARGET) > sizeof(promoted_t)),
-                std::make_unsigned_t<TARGET>, std::make_unsigned_t<promoted_t > >;
+       using u_result_t = std::conditional_t< (sizeof(TARGET) > sizeof(detail_::promoted_t<E>)),
+                std::make_unsigned_t<TARGET>, std::make_unsigned_t<detail_::promoted_t<E> > >;
        static_assert(std::is_unsigned_v<u_result_t>);
        using s_result_t = std::make_signed_t<u_result_t>;
        s_result_t value = promote_keep_signedness(val);
@@ -372,7 +371,6 @@ constexpr auto
 from_int(T val) noexcept {
     using detail_::is_similar_v;
     using std::conditional_t;
-    struct cannot_convert_integer{};
     using result_t =
             conditional_t<is_similar_v<std::uint8_t,T>, ui8,
              conditional_t<is_similar_v<std::uint16_t,T>, ui16,
@@ -381,7 +379,8 @@ from_int(T val) noexcept {
                 conditional_t<is_similar_v<std::int8_t,T>, si8,
                  conditional_t<is_similar_v<std::int16_t,T>, si16,
                   conditional_t<is_similar_v<std::int32_t,T>, si32,
-                   conditional_t<is_similar_v<std::int64_t,T>, si64, cannot_convert_integer>>>>>>>>;
+                   conditional_t<is_similar_v<std::int64_t,T>, si64, void>>>>>>>>;
+    static_assert(!std::is_void_v<result_t>, "cannot convert integer type");
     return static_cast<result_t>(val);
 }
 template<a_safeint TO, an_integer FROM>
@@ -396,14 +395,13 @@ from_int_to(FROM val) NOEXCEPT_WITH_THROWING_ASSERTS
 #endif
 #endif
     using result_t = TO;
-    using ultr = std::underlying_type_t<result_t>;
-    if constexpr(std::is_unsigned_v<ultr>){
+    if constexpr(std::is_unsigned_v<std::underlying_type_t<result_t>>){
         ps_assert( result_t{}, (val >= FROM{} &&
-                                val <= std::numeric_limits<ultr>::max())) ;
+                                val <= std::numeric_limits<std::underlying_type_t<result_t>>::max())) ;
         return static_cast<result_t>(val);
     } else {
-        ps_assert( result_t{}, (val <= std::numeric_limits<ultr>::max() &&
-                                val >= std::numeric_limits<ultr>::min()));
+        ps_assert( result_t{}, (val <= std::numeric_limits<std::underlying_type_t<result_t>>::max() &&
+                                val >= std::numeric_limits<std::underlying_type_t<result_t>>::min()));
         return static_cast<result_t>(val);
     }
 #ifdef NDEBUG
@@ -564,7 +562,7 @@ requires same_signedness<LEFT,RIGHT>
     ps_assert(result_t{}, r != RIGHT{} && " division by zero");
 #pragma GCC diagnostic pop
     if constexpr (std::numeric_limits<result_t>::is_signed){
-        bool result_is_negative = (l < LEFT{}) != (r < RIGHT{});
+        bool result_is_negative = (l < LEFT{}) ? !(r < RIGHT{}) : (r < RIGHT{});
         auto absresult =  static_cast<result_t>(
                              static_cast<ult>(
                                 abs_promoted_and_extended_as_unsigned<ult>(l)
