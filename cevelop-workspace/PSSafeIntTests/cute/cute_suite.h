@@ -36,7 +36,8 @@ namespace cute {
 	// deprecated, not supported by plug-in, not needed with Eclipse plug-in
 	inline
 	suite &operator+=(suite &left, suite const &right){
-		left.insert(left.end(),right.begin(),right.end());
+		suite::iterator const insertedAt = left.insert(left.end(),right.begin(),right.end());
+		(void) insertedAt;
 		return left;
 	}
 	inline

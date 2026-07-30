@@ -40,15 +40,42 @@ namespace cute {
 			std::string::size_type pos=0;
 			while((pos=in.find_first_of("\x00\x01\x02\x03\x04\x05\x06\x07\x08\x0b\x0c\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\"&'<>", pos, 34))!=std::string::npos){
 				switch(in[pos]){
-				case '&': in.replace(pos,1,"&amp;"); pos +=5; break;
-				case '<': in.replace(pos,1,"&lt;"); pos += 4; break;
-				case '>': in.replace(pos,1,"&gt;"); pos += 4; break;
-				case '"': in.replace(pos,1,"&quot;"); pos+=6; break;
-				case '\'':in.replace(pos,1,"&apos;"); pos+=6; break;
+				case '&': {
+					std::string &replaced = in.replace(pos,1,"&amp;");
+					(void) replaced;
+					pos +=5;
+					break;
+				}
+				case '<': {
+					std::string &replaced = in.replace(pos,1,"&lt;");
+					(void) replaced;
+					pos += 4;
+					break;
+				}
+				case '>': {
+					std::string &replaced = in.replace(pos,1,"&gt;");
+					(void) replaced;
+					pos += 4;
+					break;
+				}
+				case '"': {
+					std::string &replaced = in.replace(pos,1,"&quot;");
+					(void) replaced;
+					pos+=6;
+					break;
+				}
+				case '\'':{
+					std::string &replaced = in.replace(pos,1,"&apos;");
+					(void) replaced;
+					pos+=6;
+					break;
+				}
 				default:
 					char c = in[pos];
 					std::string replacement = "0x" + cute_to_string::hexit(c);
-					in.replace(pos, 1, replacement); pos += replacement.size(); break;
+					std::string &replaced = in.replace(pos, 1, replacement);
+					(void) replaced;
+					pos += replacement.size();
 					break;
 				}
 			}

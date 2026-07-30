@@ -35,7 +35,9 @@ namespace cute{
 		suite theSuite;
 		suite_test(suite const &s):theSuite(s){}
 		void operator()(){
-			std::for_each(theSuite.begin(),theSuite.end(),boost_or_tr1::bind(&test::operator(),_1));
+			for(suite::const_iterator it = theSuite.begin(); it != theSuite.end(); ++it){
+				it->operator()();
+			}
 		}
 	};
 }

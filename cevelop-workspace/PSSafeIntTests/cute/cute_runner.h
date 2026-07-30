@@ -71,8 +71,11 @@ namespace cute {
 	        if(!args.size() || !info.size())
 	            return true;
 	        if(args.end() != find_if(args.begin(), args.end(), prefixMatcher(info))){
-	           std::transform(args.begin(), args.end(), std::inserter(match,match.begin()),prefixCutter(info));
-	           match.erase(std::string()); // get rid of empty string
+	           std::insert_iterator<std::set<std::string> > const transformedEnd =
+	           		std::transform(args.begin(), args.end(), std::inserter(match,match.begin()),prefixCutter(info));
+	           (void) transformedEnd;
+	           std::set<std::string>::size_type const removed = match.erase(std::string()); // get rid of empty string
+	           (void) removed;
 	           return true;
 	        }
 	        return false;
@@ -93,7 +96,9 @@ namespace cute {
 	    std::vector<std::string> args;
 		runner(Listener &l, int argc = 0, const char *const *argv = 0):listener(l){
 	        if(needsFiltering(argc,argv)){
-	            std::remove_copy_if(argv + 1, argv + argc,back_inserter(args),std::logical_not<char const *>());
+	            std::back_insert_iterator<std::vector<std::string> > const copiedEnd =
+	            		std::remove_copy_if(argv + 1, argv + argc,back_inserter(args),std::logical_not<char const *>());
+	            (void) copiedEnd;
 	        }
 		}
 		bool operator()(const test & t) const
