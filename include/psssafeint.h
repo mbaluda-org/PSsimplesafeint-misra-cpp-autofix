@@ -215,10 +215,10 @@ template<psssint::a_safeint type>
     static constexpr type
     round_error() noexcept {  return type{numeric_limits<ult>::round_error()}; }
 
-    static constexpr int min_exponent = numeric_limits<ult>::min_exponent;
-    static constexpr int min_exponent10 = numeric_limits<ult>::min_exponent10;
-    static constexpr int max_exponent = numeric_limits<ult>::max_exponent;
-    static constexpr int max_exponent10 = numeric_limits<ult>::max_exponent10;
+    static constexpr std::int32_t min_exponent = numeric_limits<ult>::min_exponent;
+    static constexpr std::int32_t min_exponent10 = numeric_limits<ult>::min_exponent10;
+    static constexpr std::int32_t max_exponent = numeric_limits<ult>::max_exponent;
+    static constexpr std::int32_t max_exponent10 = numeric_limits<ult>::max_exponent10;
 
     static constexpr bool has_infinity = numeric_limits<ult>::has_infinity;
     static constexpr bool has_quiet_NaN = numeric_limits<ult>::has_quiet_NaN;
