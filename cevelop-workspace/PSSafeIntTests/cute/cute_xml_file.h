@@ -26,26 +26,52 @@
 #ifndef CUTE_XML_FILE_H_
 #define CUTE_XML_FILE_H_
 
+#include <array>
+#include <cstddef>
+#include <cstdio>
 #include <fstream>
-#include <string>
 
 namespace cute {
 struct xml_file_opener {
-	std::string filename;
+	static constexpr std::size_t filename_capacity = FILENAME_MAX;
+	std::array<char, filename_capacity> filename{};
 	std::ofstream out;
-	xml_file_opener(int argc, char const *const* argv)
-	:filename(argc>0&&argv[0]?basename(argv[0]):"testresult.xml")
-	,out(filename.c_str()){}
-	std::string basename(std::string path){
+	xml_file_opener(std::size_t argument_count, char const *const* argv)
+	:filename{}
+	,out(make_filename(argument_count, argv)){}
+	char const *make_filename(std::size_t argument_count, char const *const* argv){
+		if ((argument_count > 0u) && (argv != nullptr) && (argv[0] != nullptr)) {
+			return basename(argv[0]);
+		}
+		return basename("testresult");
+	}
+	char const *basename(char const *path){
+		static constexpr char xml_suffix[] = ".xml";
+		static constexpr std::size_t xml_suffix_length = sizeof(xml_suffix) - 1u;
 #if defined( _MSC_VER ) || defined(__MINGW32__)
 		char const sep='\\';
 #else
 		char const sep='/';
 #endif
-		std::string::size_type pos=path.find_last_of(sep,path.size()-1);
-		if (pos != std::string::npos) path.erase(0,pos+1);
-		path+=".xml";
-		return path;
+		filename.fill('\0');
+		char const *base = path;
+		for (char const *it = path; *it != '\0'; ++it){
+			if (*it == sep) {
+				base = it + 1;
+			}
+		}
+		std::size_t index = 0u;
+		while ((base[index] != '\0') && ((index + xml_suffix_length + 1u) < filename.size())) {
+			filename[index] = base[index];
+			++index;
+		}
+		if ((index + xml_suffix_length) < filename.size()) {
+			for (std::size_t suffix_index = 0u; suffix_index < xml_suffix_length; ++suffix_index, ++index){
+				filename[index] = xml_suffix[suffix_index];
+			}
+		}
+		filename[index] = '\0';
+		return filename.data();
 	}
 };
 }

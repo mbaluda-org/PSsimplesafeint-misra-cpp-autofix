@@ -2,7 +2,6 @@
 #include "psssafeint.h"
 #include "cute.h"
 #include "ide_listener.h"
-#include "xml_listener.h"
 #include "cute_runner.h"
 #include "CodeGenBenchmark.h"
 #include <type_traits>
@@ -784,9 +783,8 @@ void si8Negation(){
 }
 
 void si8negationminintidempotent(){
-    auto x = promote_keep_signedness(-(1_si8+127_si8));
-    static_assert(std::is_integral_v<decltype(x)>);
-    ASSERT_EQUAL(-128,+x);
+    static_assert(std::is_integral_v<decltype(promote_keep_signedness(-(1_si8+127_si8)))>);
+    static_assert(promote_keep_signedness(-(1_si8+127_si8)) == -128);
 }
 
 void si8overflowmakesitNegative(){
@@ -918,8 +916,7 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(ui16canNotbecomparedwithui8));
 	s.push_back(CUTE(ui32CanNotbeComparedwithlong));
 	s.push_back(CUTE(_testing::signedIntegerBoundaryTestResultRecovery));
-	cute::xml_file_opener xmlfile(argc, argv);
-    cute::xml_listener<cute::ide_listener<>> lis(xmlfile.out);
+    cute::ide_listener<> lis;
     auto runner = cute::makeRunner(lis, argc, argv);
     bool success = runner(s, "AllTests");
     success = runner(make_suite_CodeGenBenchmark(),"CodeGenBenchmark") && success;

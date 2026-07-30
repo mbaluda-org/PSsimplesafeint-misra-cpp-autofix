@@ -120,7 +120,7 @@ namespace cute {
 	private:
 	    bool needsFiltering(int argc, const char *const *argv) const
 	    {
-	        return argc > 1 && argv ;
+	        return (argc > 1) && (argv != nullptr);
 	    }
 
 
