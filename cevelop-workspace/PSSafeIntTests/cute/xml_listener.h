@@ -65,7 +65,7 @@ namespace cute {
 		}
 
 		void begin(suite const &t,char const *info, size_t n_of_tests){
-			current_suite=mask_xml_chars(info);
+			current_suite=this->mask_xml_chars(info);
 			out << std::dec << "\t<testsuite name=\"" << current_suite << "\" tests=\"" << n_of_tests << "\">\n";
 			Listener::begin(t,info, n_of_tests);
 		}
@@ -75,7 +75,7 @@ namespace cute {
 			Listener::end(t,info);
 		}
 		void start(test const &t){
-			out << "\t\t<testcase classname=\""<<current_suite <<"\" name=\""<< mask_xml_chars(t.name())<<"\"";
+			out << "\t\t<testcase classname=\""<<current_suite <<"\" name=\""<< this->mask_xml_chars(t.name())<<"\"";
 			Listener::start(t);
 		}
 		void success(test const &t, char const *msg){
@@ -83,13 +83,13 @@ namespace cute {
 			Listener::success(t,msg);
 		}
 		void failure(test const &t,test_failure const &e){
-			out << std::dec <<  ">\n\t\t\t<failure message=\"" << mask_xml_chars(e.filename) << ":" << e.lineno << " "
-				<< mask_xml_chars(e.reason) << "\">\n"<<mask_xml_chars(e.reason)<<"\n\t\t\t</failure>\n\t\t</testcase>\n";
+			out << std::dec <<  ">\n\t\t\t<failure message=\"" << this->mask_xml_chars(e.filename) << ":" << e.lineno << " "
+				<< this->mask_xml_chars(e.reason) << "\">\n"<<this->mask_xml_chars(e.reason)<<"\n\t\t\t</failure>\n\t\t</testcase>\n";
 			Listener::failure(t,e);
 		}
 		void error(test const &t, char const *what){
-			out << ">\n\t\t\t<error message=\"" << mask_xml_chars(t.name()) << " " << mask_xml_chars(what)
-				<< "\" type=\"unexpected exception\">\n"<<mask_xml_chars(what)
+			out << ">\n\t\t\t<error message=\"" << this->mask_xml_chars(t.name()) << " " << this->mask_xml_chars(what)
+				<< "\" type=\"unexpected exception\">\n"<<this->mask_xml_chars(what)
 				<<"\n\t\t\t</error>\n\t\t</testcase>\n";
 			Listener::error(t,what);
 		}

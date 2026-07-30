@@ -92,7 +92,7 @@ namespace cute {
 		Listener &listener;
 	    std::vector<std::string> args;
 		runner(Listener &l, int argc = 0, const char *const *argv = 0):listener(l){
-	        if(needsFiltering(argc,argv)){
+	        if(this->needsFiltering(argc,argv)){
 	            std::remove_copy_if(argv + 1, argv + argc,back_inserter(args),std::logical_not<char const *>());
 	        }
 		}
