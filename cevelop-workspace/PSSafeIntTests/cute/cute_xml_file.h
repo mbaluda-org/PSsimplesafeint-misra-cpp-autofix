@@ -43,7 +43,9 @@ struct xml_file_opener {
 		char const sep='/';
 #endif
 		std::string::size_type pos=path.find_last_of(sep,path.size()-1);
-		if (pos != std::string::npos) path.erase(0,pos+1);
+		if (pos != std::string::npos) {
+			path = path.erase(0,pos).erase(0,1);
+		}
 		path+=".xml";
 		return path;
 	}
